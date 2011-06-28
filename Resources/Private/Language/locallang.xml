@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the Audio Gallery extension in the FRONTEND</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_audiogallery2_domain_model_entry">Entry for audio file</label>
+			<label index="tx_audiogallery2_domain_model_entry.title">Title of audio record</label>
+			<label index="tx_audiogallery2_domain_model_entry.author">Author of audio record</label>
+			<label index="tx_audiogallery2_domain_model_entry.audio_file_path">Path to audio file</label>
+			<label index="tx_audiogallery2_domain_model_entry.preview_image_path">Path to preview image</label>
+			<label index="tx_audiogallery2_domain_model_entry.category">category</label>
+			<label index="tx_audiogallery2_domain_model_category">Category for audios</label>
+			<label index="tx_audiogallery2_domain_model_category.name">Name of category</label>
+		</languageKey>
+	</data>
+</T3locallang>
