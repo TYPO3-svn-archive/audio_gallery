@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'audio_gallery'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_audiogallery_domain_model_audio">Audio</label>
+			<label index="tx_audiogallery_domain_model_audio.title">Title</label>
+			<label index="tx_audiogallery_domain_model_audio.author">Author</label>
+			<label index="tx_audiogallery_domain_model_audio.audio_file_path">Audio File Path</label>
+			<label index="tx_audiogallery_domain_model_audio.preview_image_path">Preview Image Path</label>
+			<label index="tx_audiogallery_domain_model_audio.category">Category</label>
+			<label index="tx_audiogallery_domain_model_category">Category</label>
+			<label index="tx_audiogallery_domain_model_category.name">Name</label>
+		</languageKey>
+	</data>
+</T3locallang>
