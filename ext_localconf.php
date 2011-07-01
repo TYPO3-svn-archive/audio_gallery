@@ -7,10 +7,10 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'Pi1',
 	array(
-		'Entry' => 'index, show, new, create, edit, update, delete',
+		'Entry' => 'index',
 	),
 	array(
-		'Entry' => 'create, update, delete',
+		'Entry' => 'index',
 	)
 );
 

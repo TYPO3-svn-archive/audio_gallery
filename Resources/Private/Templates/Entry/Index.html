@@ -1,0 +1,16 @@
+<f:layout name="default" />
+<f:section name="main">
+	<div class="user-gallery">
+	
+		<f:widget.paginate objects="{entries}" as="paginatedEntries" configuration="{itemsPerPage: 12, insertAbove: 1, insertBelow: 1}">
+			<f:for each="{paginatedEntries}" as="entry">
+				<div id="pictureId_{entry.uid}" class="user">
+					<h3 class="skin-color">{entry.title}</h3>
+					<p>{entry.author}</p>
+					<f:render partial="jwplayer" arguments="{entry:entry}" />
+				</div>
+			</f:for>
+		</f:widget.paginate>
+		
+	</div>
+</f:section>

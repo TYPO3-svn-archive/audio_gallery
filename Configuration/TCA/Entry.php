@@ -3,8 +3,8 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$TCA['tx_audiogallery2_domain_model_entry'] = array(
-	'ctrl' => $TCA['tx_audiogallery2_domain_model_entry']['ctrl'],
+$TCA['tx_audiogallery_domain_model_entry'] = array(
+	'ctrl' => $TCA['tx_audiogallery_domain_model_entry']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList'	=> 'title,author,audio_file_path,preview_image_path,category'
 	),
@@ -37,8 +37,8 @@ $TCA['tx_audiogallery2_domain_model_entry'] = array(
 				'items'			=> array(
 					array('', 0),
 				),
-				'foreign_table' => 'tx_audiogallery2_domain_model_entry',
-				'foreign_table_where' => 'AND tx_audiogallery2_domain_model_entry.uid=###REC_FIELD_l18n_parent### AND tx_audiogallery2_domain_model_entry.sys_language_uid IN (-1,0)',
+				'foreign_table' => 'tx_audiogallery_domain_model_entry',
+				'foreign_table_where' => 'AND tx_audiogallery_domain_model_entry.uid=###REC_FIELD_l18n_parent### AND tx_audiogallery_domain_model_entry.sys_language_uid IN (-1,0)',
 			)
 		),
 		'l18n_diffsource' => array(
@@ -63,7 +63,7 @@ $TCA['tx_audiogallery2_domain_model_entry'] = array(
 		),
 		'title' => array(
 			'exclude'	=> 1,
-			'label'		=> 'LLL:EXT:audio_gallery2/Resources/Private/Language/locallang_db.xml:tx_audiogallery2_domain_model_entry.title',
+			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.title',
 			'config'	=> array(
 				'type' => 'input',
 				'size' => 30,
@@ -72,7 +72,7 @@ $TCA['tx_audiogallery2_domain_model_entry'] = array(
 		),
 		'author' => array(
 			'exclude'	=> 1,
-			'label'		=> 'LLL:EXT:audio_gallery2/Resources/Private/Language/locallang_db.xml:tx_audiogallery2_domain_model_entry.author',
+			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.author',
 			'config'	=> array(
 				'type' => 'input',
 				'size' => 30,
@@ -80,34 +80,67 @@ $TCA['tx_audiogallery2_domain_model_entry'] = array(
 			)
 		),
 		'audio_file_path' => array(
-			'exclude'	=> 1,
-			'label'		=> 'LLL:EXT:audio_gallery2/Resources/Private/Language/locallang_db.xml:tx_audiogallery2_domain_model_entry.audio_file_path',
-			'config'	=> array(
-				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim,required'
+			'exclude'	=> 0,
+			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.audio_file_path',
+			'config'  => array(
+				'type' => 'group',
+				'internal_type' => 'file',
+				'allowed' => 'mp3',
+				'max_size' => '10000',
+				'uploadfolder' => 'uploads/tx_audiogallery',
+				'show_thumbs' => '1',
+				'size' => 3,
+				'autoSizeMax' => 15,
+				'maxitems' => '1',
+				'minitems' => '0'	
 			)
 		),
 		'preview_image_path' => array(
 			'exclude'	=> 1,
-			'label'		=> 'LLL:EXT:audio_gallery2/Resources/Private/Language/locallang_db.xml:tx_audiogallery2_domain_model_entry.preview_image_path',
-			'config'	=> array(
-				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim'
+			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.preview_image_path',
+			'config'  => array(
+				'type' => 'group',
+				'internal_type' => 'file',
+				'allowed' => $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
+				'max_size' => '10000',
+				'uploadfolder' => 'uploads/tx_audiogallery',
+				'show_thumbs' => '1',
+				'size' => 3,
+				'autoSizeMax' => 15,
+				'maxitems' => '1',
+				'minitems' => '0'	
 			)
 		),
 		'category' => array(
 			'exclude'	=> 0,
-			'label'		=> 'LLL:EXT:audio_gallery2/Resources/Private/Language/locallang_db.xml:tx_audiogallery2_domain_model_entry.category',
+			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.category',
 			'config'	=> array(
-				'type' => 'inline',
-				'foreign_table' => 'tx_audiogallery2_domain_model_category',
+				'type' => 'select',
+				'foreign_table' => 'tx_audiogallery_domain_model_category',
 				'minitems' => 0,
 				'maxitems' => 1,
-				'appearance' => array(
-					'collapse' => 0,
-					'newRecordLinkPosition' => 'bottom',
+				'wizards' => array(
+					'_PADDING' => 1,
+					'_VERTICAL' => 0,
+					'edit' => array(
+						'type' => 'popup',
+						'title' => 'Edit',
+						'script' => 'wizard_edit.php',
+						'icon' => 'edit2.gif',
+						'popup_onlyOpenIfSelected' => 1,
+						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+						),
+					'add' => Array(
+						'type' => 'script',
+						'title' => 'Create new',
+						'icon' => 'add.gif',
+						'params' => array(
+							'table'=>'tx_audiogallery_domain_model_category',
+							'pid' => '###CURRENT_PID###',
+							'setValue' => 'prepend'
+							),
+						'script' => 'wizard_add.php',
+					),
 				),
 			)
 		),

@@ -2,18 +2,18 @@
 <T3locallang>
 	<meta type="array">
 		<type>database</type>
-		<description>Language labels for database tables/fields belonging to extension 'audio_gallery2'</description>
+		<description>Language labels for database tables/fields belonging to extension 'audio_gallery'</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="tx_audiogallery2_domain_model_entry">Entry</label>
-			<label index="tx_audiogallery2_domain_model_entry.title">Title</label>
-			<label index="tx_audiogallery2_domain_model_entry.author">Author</label>
-			<label index="tx_audiogallery2_domain_model_entry.audio_file_path">Audio File Path</label>
-			<label index="tx_audiogallery2_domain_model_entry.preview_image_path">Preview Image Path</label>
-			<label index="tx_audiogallery2_domain_model_entry.category">Category</label>
-			<label index="tx_audiogallery2_domain_model_category">Category</label>
-			<label index="tx_audiogallery2_domain_model_category.name">Name</label>
+			<label index="tx_audiogallery_domain_model_entry">Entry</label>
+			<label index="tx_audiogallery_domain_model_entry.title">Title</label>
+			<label index="tx_audiogallery_domain_model_entry.author">Author</label>
+			<label index="tx_audiogallery_domain_model_entry.audio_file_path">Audio File Path</label>
+			<label index="tx_audiogallery_domain_model_entry.preview_image_path">Preview Image Path</label>
+			<label index="tx_audiogallery_domain_model_entry.category">Category</label>
+			<label index="tx_audiogallery_domain_model_category">Category</label>
+			<label index="tx_audiogallery_domain_model_category.name">Name</label>
 		</languageKey>
 	</data>
 </T3locallang>

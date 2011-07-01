@@ -30,17 +30,59 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-// TODO: As your extension matures, you should use Tx_Extbase_MVC_Controller_ActionController as base class, instead of the ScaffoldingController used below.
-class Tx_AudioGallery2_Controller_EntryController extends Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController {
-	
+class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controller_ActionController {
 
+	/**
+	 * @var Tx_AudioGallery_Domain_Repository_EntryRepository
+	 */
+	protected $entryRepository;
 	
 	/**
-	 * list action
+	 * initialize action
+	 */
+	protected function initializeAction() {
+		$this->entryRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_EntryRepository' );
+
+		$extPath = t3lib_extMgm::siteRelPath ( 'jwplayer' );
+		$file = $extPath . 'Resources/Public/Player/jwplayer.js';
+		$GLOBALS ['TSFE']->getPageRenderer ()->addJsLibrary ( 'jwplayer', $file, 'text/javascript',TRUE ,TRUE);
+	}
+	
+	/**
+	 * index action
 	 *
 	 * @return string The rendered list action
 	 */
-	public function listAction() {
+	public function indexAction() {
+		$entries = $this->entryRepository->findAll();
+		
+		$entries = $this->addJwplayerConfig($entries);
+		
+		$this->view->assign ( 'entries', $entries );
+	}
+	
+	/**
+	 * @param $entries
+	 */
+	protected function addJwplayerConfig($entries) {
+
+		foreach ($entries as $entry) {
+			$settings = array();
+			$settings['player_id'] = 'player' . $entry->getUid();
+			$settings['file'] = $entry->getAudioFileSrc();
+			$settings['image'] = $entry->getPreviewImageSrc();
+			$settings['volume'] = 15;
+			$settings['height'] = 100;
+			$settings['width'] = 100;
+			$settings['skin'] = 'fileadmin/files_congstar/bekle/bekle.xml';
+			
+			$config = new Tx_Jwplayer_Config();
+			$config->setSettings($settings);
+			
+			$entry->setJwplayerConfig($config->getJsConfig());
+		}
+
+		return $entries;
 	}
 	
 }

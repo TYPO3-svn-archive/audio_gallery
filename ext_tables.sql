@@ -1,4 +1,4 @@
-CREATE TABLE tx_audiogallery2_domain_model_entry (
+CREATE TABLE tx_audiogallery_domain_model_entry (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	
@@ -32,7 +32,7 @@ CREATE TABLE tx_audiogallery2_domain_model_entry (
 	KEY parent (pid)
 );
 
-CREATE TABLE tx_audiogallery2_domain_model_category (
+CREATE TABLE tx_audiogallery_domain_model_category (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	

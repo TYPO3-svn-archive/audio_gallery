@@ -30,7 +30,9 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_AudioGallery2_Domain_Model_Entry extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_AudioGallery_Domain_Model_Entry extends Tx_Extbase_DomainObject_AbstractEntity {
+	
+	const UPLOAD_FOLDER = 'uploads/tx_audiogallery/';
 	
 	/**
 	 * Title of audio record
@@ -58,10 +60,22 @@ class Tx_AudioGallery2_Domain_Model_Entry extends Tx_Extbase_DomainObject_Abstra
 	protected $previewImagePath;
 	
 	/**
-	 * category
-	 * @var Tx_AudioGallery2_Domain_Model_Category
+	 * Category
+	 * @var Tx_AudioGallery_Domain_Model_Category
 	 */
 	protected $category;
+	
+	/**
+	 * Week
+	 * @var Tx_AudioGallery_Domain_Model_Week
+	 */
+	protected $week;
+	
+	/**
+	 * Jwplayer config
+	 * @var array
+	 */
+	protected $jwplayerConfig;
 	
 	/**
 	 * Setter for title
@@ -142,20 +156,76 @@ class Tx_AudioGallery2_Domain_Model_Entry extends Tx_Extbase_DomainObject_Abstra
 	/**
 	 * Setter for category
 	 *
-	 * @param Tx_AudioGallery2_Domain_Model_Category $category category
+	 * @param Tx_AudioGallery_Domain_Model_Category $category category
 	 * @return void
 	 */
-	public function setCategory(Tx_AudioGallery2_Domain_Model_Category $category) {
+	public function setCategory(Tx_AudioGallery_Domain_Model_Category $category) {
 		$this->category = $category;
 	}
 
 	/**
 	 * Getter for category
 	 *
-	 * @return Tx_AudioGallery2_Domain_Model_Category category
+	 * @return Tx_AudioGallery_Domain_Model_Category category
 	 */
 	public function getCategory() {
 		return $this->category;
+	}
+	
+	/**
+	 * Setter for week
+	 *
+	 * @param Tx_AudioGallery_Domain_Model_Week $week week
+	 * @return void
+	 */
+	public function setWeek(Tx_AudioGallery_Domain_Model_Week $week) {
+		$this->week = $week;
+	}
+
+	/**
+	 * Getter for week
+	 *
+	 * @return Tx_AudioGallery_Domain_Model_Week week
+	 */
+	public function getWeek() {
+		return $this->week;
+	}
+	
+	/**
+	 * Setter for jwplayer config
+	 *
+	 * @param array $jwplayerConfig jwplayerConfig
+	 * @return void
+	 */
+	public function setJwplayerConfig($jwplayerConfig) {
+		$this->jwplayerConfig = $jwplayerConfig;
+	}
+
+	/**
+	 * Getter for jwplayer config
+	 *
+	 * @return array
+	 */
+	public function getJwplayerConfig() {
+		return $this->jwplayerConfig;
+	}
+	
+	/**
+	 * Returns source of audio file
+	 *
+	 * @return string Src to audio file
+	 */
+	public function getAudioFileSrc() {
+		return self::UPLOAD_FOLDER . $this->audioFilePath;
+	}
+	
+	/**
+	 * Returns source of preview image
+	 *
+	 * @return string Src to preview image
+	 */
+	public function getPreviewImageSrc() {
+		return self::UPLOAD_FOLDER . $this->previewImagePath;
 	}
 	
 }
