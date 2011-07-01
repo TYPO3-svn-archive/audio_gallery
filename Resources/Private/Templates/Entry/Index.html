@@ -6,7 +6,7 @@
 			<div class="filter-area">
 				<f:form action="index">
 					<f:for each="{filterGroups}" as="filterGroup">
-						<f:form.select name="{filterGroup.name}" options="{filterGroup.filterItem}:{filterGroup.filterItem.name}" />
+						<f:form.select name="{filterGroup.name}" options="{filterGroup.filterItem}" />
 					</f:for>
 				</f:form>
 			</div>
