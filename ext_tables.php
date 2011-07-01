@@ -8,9 +8,9 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'Pi1',
 	'Audio Gallery'
 );
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY . '_pi1'] = 'layout,recursive,select_key';
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_pi1'] = 'pi_flexform';
-t3lib_extMgm::addPiFlexFormValue($_EXTKEY . '_pi1', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_pi1.xml');
+$TCA['tt_content']['types']['list']['subtypes_excludelist'][  'audiogallery_pi1'] = 'layout,recursive,select_key';
+//$TCA['tt_content']['types']['list']['subtypes_addlist'][  'audiogallery_pi1'] = 'pi_flexform';
+//t3lib_extMgm::addPiFlexFormValue($_EXTKEY . '_pi1', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_pi1.xml');
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Audio Gallery');
 
