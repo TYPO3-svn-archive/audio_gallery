@@ -108,6 +108,17 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 
 		return $entries;
 	}
-	
+	/**
+	 * Method for displaying custom error flash messages, or to display no flash message at all on errors.
+	 * 
+	 * INFO:
+	 *  - Flash-Messages (will be put in session of FE-user) in extbase 1.3.x only works together with TYPO3 4.5.x (because only
+	 *    TYPO3 4.5.x supports FE-context for flashMessages)! This extension should work with TYPO3 4.3.x, so we must deactive this messages!
+	 *
+	 * @return boolean
+	 */
+	protected function getErrorFlashMessage() {
+		return FALSE;
+	}
 }
 ?>
