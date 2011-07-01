@@ -33,6 +33,11 @@
 class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controller_ActionController {
 
 	/**
+	 * @var Tx_AudioGallery_Domain_Repository_FilterGroupRepository
+	 */
+	protected $filterGroupRepository;
+	
+	/**
 	 * @var Tx_AudioGallery_Domain_Repository_EntryRepository
 	 */
 	protected $entryRepository;
@@ -41,6 +46,7 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 * initialize action
 	 */
 	protected function initializeAction() {
+		$this->filterGroupRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_FilterGroupRepository' );
 		$this->entryRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_EntryRepository' );
 
 		$extPath = t3lib_extMgm::siteRelPath ( 'jwplayer' );
@@ -54,10 +60,12 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 * @return string The rendered list action
 	 */
 	public function indexAction() {
-		$entries = $this->entryRepository->findAll();
+		$filterGroups = $this->filterGroupRepository->findAll();
 		
+		$entries = $this->entryRepository->findAll();
 		$entries = $this->addJwplayerConfig($entries);
 		
+		$this->view->assign ( 'filterGroups', $filterGroups );
 		$this->view->assign ( 'entries', $entries );
 	}
 	
@@ -72,8 +80,8 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 			$settings['file'] = $entry->getAudioFileSrc();
 			$settings['image'] = $entry->getPreviewImageSrc();
 			$settings['volume'] = 15;
-			$settings['height'] = 100;
-			$settings['width'] = 100;
+			$settings['height'] = 80;
+			$settings['width'] = 123;
 			$settings['skin'] = 'fileadmin/files_congstar/bekle/bekle.xml';
 			
 			$config = new Tx_Jwplayer_Config();

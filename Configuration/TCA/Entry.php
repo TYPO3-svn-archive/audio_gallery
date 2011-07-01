@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_audiogallery_domain_model_entry'] = array(
 	'ctrl' => $TCA['tx_audiogallery_domain_model_entry']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList'	=> 'title,author,audio_file_path,preview_image_path,category'
+		'showRecordFieldList'	=> 'title,author,audio_file_path,preview_image_path,filter_item'
 	),
 	'types' => array(
-		'1' => array('showitem'	=> 'title,author,audio_file_path,preview_image_path,category')
+		'1' => array('showitem'	=> 'title,author,audio_file_path,preview_image_path,filter_item')
 	),
 	'palettes' => array(
 		'1' => array('showitem'	=> '')
@@ -111,17 +111,19 @@ $TCA['tx_audiogallery_domain_model_entry'] = array(
 				'minitems' => '0'	
 			)
 		),
-		'category' => array(
+		'filter_item' => array(
 			'exclude'	=> 0,
-			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.category',
+			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.filter_item',
 			'config'	=> array(
 				'type' => 'select',
-				'foreign_table' => 'tx_audiogallery_domain_model_category',
-				'minitems' => 0,
-				'maxitems' => 1,
+				'foreign_table' => 'tx_audiogallery_domain_model_filteritem',
+				'foreign_field' => 'entry',
+				'size' => 10,
+				'autoSizeMax' => 30,
+				'maxitems' => 9999,
 				'wizards' => array(
 					'_PADDING' => 1,
-					'_VERTICAL' => 0,
+					'_VERTICAL' => 1,
 					'edit' => array(
 						'type' => 'popup',
 						'title' => 'Edit',
@@ -135,7 +137,7 @@ $TCA['tx_audiogallery_domain_model_entry'] = array(
 						'title' => 'Create new',
 						'icon' => 'add.gif',
 						'params' => array(
-							'table'=>'tx_audiogallery_domain_model_category',
+							'table'=>'tx_audiogallery_domain_model_filteritem',
 							'pid' => '###CURRENT_PID###',
 							'setValue' => 'prepend'
 							),

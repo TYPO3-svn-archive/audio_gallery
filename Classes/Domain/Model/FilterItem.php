@@ -24,16 +24,16 @@
 ***************************************************************/
 
 /**
- * Category for audios
+ * Filter item for audios
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_AudioGallery_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_AudioGallery_Domain_Model_FilterItem extends Tx_Extbase_DomainObject_AbstractEntity {
 	
 	/**
-	 * Name of category
+	 * Name of filter item
 	 * @var string
 	 * @validate NotEmpty
 	 */
@@ -42,7 +42,7 @@ class Tx_AudioGallery_Domain_Model_Category extends Tx_Extbase_DomainObject_Abst
 	/**
 	 * Setter for name
 	 *
-	 * @param string $name Name of category
+	 * @param string $name Name of filter item
 	 * @return void
 	 */
 	public function setName($name) {
@@ -52,7 +52,7 @@ class Tx_AudioGallery_Domain_Model_Category extends Tx_Extbase_DomainObject_Abst
 	/**
 	 * Getter for name
 	 *
-	 * @return string Name of category
+	 * @return string Name of filter item
 	 */
 	public function getName() {
 		return $this->name;

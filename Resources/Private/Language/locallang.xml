@@ -11,9 +11,12 @@
 			<label index="tx_audiogallery_domain_model_entry.author">Author of audio record</label>
 			<label index="tx_audiogallery_domain_model_entry.audio_file_path">Path to audio file</label>
 			<label index="tx_audiogallery_domain_model_entry.preview_image_path">Path to preview image</label>
-			<label index="tx_audiogallery_domain_model_entry.category">category</label>
-			<label index="tx_audiogallery_domain_model_category">Category for audios</label>
-			<label index="tx_audiogallery_domain_model_category.name">Name of category</label>
+			<label index="tx_audiogallery_domain_model_entry.filter_item">Item for filter group</label>
+			<label index="tx_audiogallery_domain_model_filteritem">Filter item for audios</label>
+			<label index="tx_audiogallery_domain_model_filteritem.name">Name of filter item</label>
+			<label index="tx_audiogallery_domain_model_filtergroup">Container for categories</label>
+			<label index="tx_audiogallery_domain_model_filtergroup.name">Name of filter</label>
+			<label index="tx_audiogallery_domain_model_filtergroup.filter_item">filterItem</label>
 		</languageKey>
 	</data>
 </T3locallang>

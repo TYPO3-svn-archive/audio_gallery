@@ -24,13 +24,13 @@
 ***************************************************************/
 
 /**
- * Repository for the Entry object
+ * Repository for the FilterGroup object
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_AudioGallery_Domain_Repository_EntryRepository extends Tx_Extbase_Persistence_Repository {
+class Tx_AudioGallery_Domain_Repository_FilterGroupRepository extends Tx_Extbase_Persistence_Repository {
 
 
 }

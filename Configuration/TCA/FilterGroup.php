@@ -3,13 +3,13 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$TCA['tx_audiogallery_domain_model_category'] = array(
-	'ctrl' => $TCA['tx_audiogallery_domain_model_category']['ctrl'],
+$TCA['tx_audiogallery_domain_model_filtergroup'] = array(
+	'ctrl' => $TCA['tx_audiogallery_domain_model_filtergroup']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList'	=> 'name'
+		'showRecordFieldList'	=> 'name,filter_item'
 	),
 	'types' => array(
-		'1' => array('showitem'	=> 'name')
+		'1' => array('showitem'	=> 'name,filter_item')
 	),
 	'palettes' => array(
 		'1' => array('showitem'	=> '')
@@ -37,8 +37,8 @@ $TCA['tx_audiogallery_domain_model_category'] = array(
 				'items'			=> array(
 					array('', 0),
 				),
-				'foreign_table' => 'tx_audiogallery_domain_model_category',
-				'foreign_table_where' => 'AND tx_audiogallery_domain_model_category.uid=###REC_FIELD_l18n_parent### AND tx_audiogallery_domain_model_category.sys_language_uid IN (-1,0)',
+				'foreign_table' => 'tx_audiogallery_domain_model_filtergroup',
+				'foreign_table_where' => 'AND tx_audiogallery_domain_model_filtergroup.uid=###REC_FIELD_l18n_parent### AND tx_audiogallery_domain_model_filtergroup.sys_language_uid IN (-1,0)',
 			)
 		),
 		'l18n_diffsource' => array(
@@ -63,11 +63,25 @@ $TCA['tx_audiogallery_domain_model_category'] = array(
 		),
 		'name' => array(
 			'exclude'	=> 1,
-			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_category.name',
+			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_filtergroup.name',
 			'config'	=> array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim,required'
+			)
+		),
+		'filter_item' => array(
+			'exclude'	=> 0,
+			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_filtergroup.filter_item',
+			'config'	=> array(
+				'type' => 'inline',
+				'foreign_table' => 'tx_audiogallery_domain_model_filteritem',
+				'foreign_field' => 'filtergroup',
+				'maxitems'      => 9999,
+				'appearance' => array(
+					'collapse' => 0,
+					'newRecordLinkPosition' => 'bottom',
+				),
 			)
 		),
 	),

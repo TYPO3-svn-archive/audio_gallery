@@ -11,7 +11,7 @@
 			<label index="author.description">Author of audio record</label>
 			<label index="audio_file_path.description">Path to audio file</label>
 			<label index="preview_image_path.description">Path to preview image</label>
-			<label index="category.description">category</label>
+			<label index="filter_item.description">filterItem</label>
 		</languageKey>
     </data>
 </T3locallang>

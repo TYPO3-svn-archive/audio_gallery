@@ -37,11 +37,11 @@ $TCA['tx_audiogallery_domain_model_entry'] = array(
 	)
 );
 
-t3lib_extMgm::addLLrefForTCAdescr('tx_audiogallery_domain_model_category', 'EXT:audio_gallery/Resources/Private/Language/locallang_csh_tx_audiogallery_domain_model_category.xml');
-t3lib_extMgm::allowTableOnStandardPages('tx_audiogallery_domain_model_category');
-$TCA['tx_audiogallery_domain_model_category'] = array(
+t3lib_extMgm::addLLrefForTCAdescr('tx_audiogallery_domain_model_filteritem', 'EXT:audio_gallery/Resources/Private/Language/locallang_csh_tx_audiogallery_domain_model_filteritem.xml');
+t3lib_extMgm::allowTableOnStandardPages('tx_audiogallery_domain_model_filteritem');
+$TCA['tx_audiogallery_domain_model_filteritem'] = array(
 	'ctrl' => array(
-		'title'						=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_category',
+		'title'						=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_filteritem',
 		'label'						=> 'name',
 		'tstamp'					=> 'tstamp',
 		'crdate'					=> 'crdate',
@@ -55,8 +55,31 @@ $TCA['tx_audiogallery_domain_model_category'] = array(
 		'enablecolumns'				=> array(
 			'disabled'		=> 'hidden'
 		),
-		'dynamicConfigFile'			=> t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Category.php',
-		'iconfile'					=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_audiogallery_domain_model_category.gif'
+		'dynamicConfigFile'			=> t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/FilterItem.php',
+		'iconfile'					=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_audiogallery_domain_model_filteritem.gif'
+	)
+);
+
+t3lib_extMgm::addLLrefForTCAdescr('tx_audiogallery_domain_model_filtergroup', 'EXT:audio_gallery/Resources/Private/Language/locallang_csh_tx_audiogallery_domain_model_filtergroup.xml');
+t3lib_extMgm::allowTableOnStandardPages('tx_audiogallery_domain_model_filtergroup');
+$TCA['tx_audiogallery_domain_model_filtergroup'] = array(
+	'ctrl' => array(
+		'title'						=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_filtergroup',
+		'label'						=> 'name',
+		'tstamp'					=> 'tstamp',
+		'crdate'					=> 'crdate',
+		'versioningWS'				=> 2,
+		'versioning_followPages'	=> TRUE,
+		'origUid'					=> 't3_origuid',
+		'languageField'				=> 'sys_language_uid',
+		'transOrigPointerField'		=> 'l18n_parent',
+		'transOrigDiffSourceField'	=> 'l18n_diffsource',
+		'delete'					=> 'deleted',
+		'enablecolumns'				=> array(
+			'disabled'		=> 'hidden'
+		),
+		'dynamicConfigFile'			=> t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/FilterGroup.php',
+		'iconfile'					=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_audiogallery_domain_model_filtergroup.gif'
 	)
 );
 

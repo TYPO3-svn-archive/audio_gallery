@@ -60,16 +60,10 @@ class Tx_AudioGallery_Domain_Model_Entry extends Tx_Extbase_DomainObject_Abstrac
 	protected $previewImagePath;
 	
 	/**
-	 * Category
-	 * @var Tx_AudioGallery_Domain_Model_Category
+	 * filterItem
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_AudioGallery_Domain_Model_FilterItem>
 	 */
-	protected $category;
-	
-	/**
-	 * Week
-	 * @var Tx_AudioGallery_Domain_Model_Week
-	 */
-	protected $week;
+	protected $filterItem;
 	
 	/**
 	 * Jwplayer config
@@ -154,41 +148,42 @@ class Tx_AudioGallery_Domain_Model_Entry extends Tx_Extbase_DomainObject_Abstrac
 	}
 	
 	/**
-	 * Setter for category
+	 * Setter for filterItem
 	 *
-	 * @param Tx_AudioGallery_Domain_Model_Category $category category
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_AudioGallery_Domain_Model_FilterItem> $filterItem filterItem
 	 * @return void
 	 */
-	public function setCategory(Tx_AudioGallery_Domain_Model_Category $category) {
-		$this->category = $category;
+	public function setFilterItem(Tx_Extbase_Persistence_ObjectStorage $filterItem) {
+		$this->filterItem = $filterItem;
 	}
 
 	/**
-	 * Getter for category
+	 * Getter for filterItem
 	 *
-	 * @return Tx_AudioGallery_Domain_Model_Category category
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_AudioGallery_Domain_Model_FilterItem> filterItem
 	 */
-	public function getCategory() {
-		return $this->category;
+	public function getFilterItem() {
+		return $this->filterItem;
 	}
 	
 	/**
-	 * Setter for week
+	 * Adds a FilterItem
 	 *
-	 * @param Tx_AudioGallery_Domain_Model_Week $week week
+	 * @param Tx_AudioGallery_Domain_Model_FilterItem the FilterItem to be added
 	 * @return void
 	 */
-	public function setWeek(Tx_AudioGallery_Domain_Model_Week $week) {
-		$this->week = $week;
+	public function addFilterItem(Tx_AudioGallery_Domain_Model_FilterItem $filterItem) {
+		$this->filterItem->attach($filterItem);
 	}
-
+	
 	/**
-	 * Getter for week
+	 * Removes a FilterItem
 	 *
-	 * @return Tx_AudioGallery_Domain_Model_Week week
+	 * @param Tx_AudioGallery_Domain_Model_FilterItem the FilterItem to be removed
+	 * @return void
 	 */
-	public function getWeek() {
-		return $this->week;
+	public function removeFilterItem(Tx_AudioGallery_Domain_Model_FilterItem $filterItem) {
+		$this->filterItem->detach($filterItem);
 	}
 	
 	/**
