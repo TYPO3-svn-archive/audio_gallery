@@ -1,0 +1,16 @@
+{namespace addthis=Tx_Addthis_ViewHelpers}
+<f:layout name="default" />
+<f:section name="main">
+	<div class="entry" id="entry_{entry.uid}">
+		<p>{entry.title}</p>
+		<h3 class="skin-color">{entry.author}</h3>
+		<div class="background skin-back">
+			<f:render partial="jwplayer" arguments="{entry:entry}" />
+		</div>
+		<f:render partial="Addthis" arguments="{entry:entry}" />
+	</div>
+	<script type="text/javascript">
+		<addthis:rawValue value="{addthis_config}" />
+	</script>
+	<script type="text/javascript" src="{addthis_jsurl}"></script>
+</f:section>

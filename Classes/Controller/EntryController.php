@@ -69,7 +69,22 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		$this->view->assign ( 'filterGroups', $filterGroups );
 		$this->view->assign ( 'entries', $entries );
 	}
-	
+	/**
+	 * show single entry
+	 * @param Tx_AudioGallery_Domain_Model_Entry $entry
+	 */
+	public function showAction(Tx_AudioGallery_Domain_Model_Entry $entry) {
+		$entries = $this->addJwplayerConfig(array($entry));
+		$codeGenerator = $this->objectManager->get ('Tx_Addthis_CodeGenerator');
+		$metaTags = '';
+		$metaTags .= '<meta property="og:title" content="'.$entry->getTitle().'"/>'.PHP_EOL;
+		$metaTags .= '<meta property="og:image" content="'.$entry->getPreviewImageSrc().'"/> '.PHP_EOL;
+		$metaTags .= '<meta property="og:type" content="website"/> '.PHP_EOL;
+		$GLOBALS['TSFE']->additionalHeaderData['audio_galery']  = $metaTags;
+		$this->view->assign ( 'entry', $entry );
+		$this->view->assign('addthis_config',$codeGenerator->getConfigJs());
+		$this->view->assign('addthis_jsurl',$codeGenerator->getJsImport());
+	}
 	/**
 	 * @param $entries
 	 */
