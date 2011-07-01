@@ -61,10 +61,11 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 */
 	public function indexAction() {
 		$filterGroups = $this->filterGroupRepository->findAll();
-		
 		$entries = $this->entryRepository->findAll();
 		$entries = $this->addJwplayerConfig($entries);
-		
+		$codeGenerator = $this->objectManager->get ('Tx_Addthis_CodeGenerator');
+		$this->view->assign('addthis_config',$codeGenerator->getConfigJs());
+		$this->view->assign('addthis_jsurl',$codeGenerator->getJsImport());
 		$this->view->assign ( 'filterGroups', $filterGroups );
 		$this->view->assign ( 'entries', $entries );
 	}

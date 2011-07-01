@@ -1,3 +1,4 @@
+{namespace addthis=Tx_Addthis_ViewHelpers}
 <f:layout name="default" />
 <f:section name="main">
 	<div class="audio-gallery">
@@ -21,6 +22,20 @@
 				<h3 class="skin-color">{entry.author}</h3>
 				<div class="background skin-back">
 					<f:render partial="jwplayer" arguments="{entry:entry}" />
+					<!-- AddThis Button BEGIN -->
+					<!-- TODO ADD url to single View -->
+					<div class="addthis_toolbox addthis_default_style ">
+						<a class="addthis_button_compact" style="padding:0;">
+							<img src="{f:uri.resource(path:'Images/more.gif')}" />
+						</a>
+						<a class="addthis_button_email" style="padding:0;">
+							<img src="{f:uri.resource(path:'Images/mail.gif')}" />
+						</a>
+						<a class="addthis_button_facebook" style="padding:0;">
+							<img src="{f:uri.resource(path:'Images/share.gif')" />
+						</a>
+					</div>
+					<!-- AddThis Button END -->
 				</div>
 			</div>
 		</f:for>
@@ -32,4 +47,8 @@
 		</div>
 		
 	</div>
+	<script type="text/javascript">
+		<addthis:rawValue value="{addthis_config}" />
+	</script>
+	<script type="text/javascript" src="{addthis_jsurl}"></script>
 </f:section>
