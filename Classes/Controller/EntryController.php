@@ -74,22 +74,36 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 * @param Tx_AudioGallery_Domain_Model_Entry $entry
 	 */
 	public function showAction(Tx_AudioGallery_Domain_Model_Entry $entry) {
+		$this->addOpenGraphMetaTags($entry);
 		$entries = $this->addJwplayerConfig(array($entry));
-		$codeGenerator = $this->objectManager->get ('Tx_Addthis_CodeGenerator');
-		$metaTags = '';
-		$metaTags .= '<meta property="og:title" content="'.$entry->getTitle().'"/>'.PHP_EOL;
-		$metaTags .= '<meta property="og:image" content="'.$entry->getPreviewImageSrc().'"/> '.PHP_EOL;
-		$metaTags .= '<meta property="og:type" content="website"/> '.PHP_EOL;
-		$GLOBALS['TSFE']->additionalHeaderData['audio_galery']  = $metaTags;
 		$this->view->assign ( 'entry', $entry );
+		$codeGenerator = $this->objectManager->get ('Tx_Addthis_CodeGenerator');
 		$this->view->assign('addthis_config',$codeGenerator->getConfigJs());
 		$this->view->assign('addthis_jsurl',$codeGenerator->getJsImport());
+	}
+	/**
+	 * @param Tx_AudioGallery_Domain_Model_Entry $entry
+	 */
+	private function addOpenGraphMetaTags(Tx_AudioGallery_Domain_Model_Entry $entry){
+		$flashConfigGenerator = $this->objectManager->get ('Tx_Jwplayer_FlashConfigGenerator');
+		$arguments = array();
+		$arguments['tx_jwplayer_pi1'] = array();
+		$arguments['tx_jwplayer_pi1']['action'] = 'showVideo';
+		$arguments['tx_jwplayer_pi1']['controller'] = 'Entry';
+		$settings['image'] = $entry->getPreviewImageSrc();
+		$settings['autostart']= TRUE;
+		$settings['file']= $entry->getAudioFileSrc();
+		$arguments['tx_jwplayer_pi1']['flash_player_config'] = $flashConfigGenerator->encode($settings, $entry->getPreviewImagePath().$entry->getPreviewImagePath() );
+		$url = $this->uriBuilder->setArguments($arguments)->setCreateAbsoluteUri(TRUE)->buildFrontendUri();
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:type" content="video"/>' );
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta name="medium" content="video"/>' );
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video" content="'.$url.'"/>' );
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:type" content="application/x-shockwave-flash"/>' );
 	}
 	/**
 	 * @param $entries
 	 */
 	protected function addJwplayerConfig($entries) {
-
 		foreach ($entries as $entry) {
 			$settings = array();
 			$settings['player_id'] = 'player' . $entry->getUid();
@@ -99,13 +113,10 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 			$settings['height'] = 80;
 			$settings['width'] = 123;
 			$settings['skin'] = 'fileadmin/files_congstar/bekle/bekle.xml';
-			
 			$config = new Tx_Jwplayer_Config();
 			$config->setSettings($settings);
-			
 			$entry->setJwplayerConfig($config->getJsConfig());
 		}
-
 		return $entries;
 	}
 	/**
@@ -121,4 +132,3 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		return FALSE;
 	}
 }
-?>
