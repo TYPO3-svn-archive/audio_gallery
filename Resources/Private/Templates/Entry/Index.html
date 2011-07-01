@@ -22,7 +22,9 @@
 				<h3 class="skin-color">{entry.author}</h3>
 				<div class="background skin-back">
 					<f:render partial="jwplayer" arguments="{entry:entry}" />
-					<!-- AddThis Button BEGIN -->
+					
+				</div>
+				<!-- AddThis Button BEGIN -->
 					<!-- TODO ADD url to single View -->
 					<div class="addthis_toolbox addthis_default_style ">
 						<a class="addthis_button_compact" style="padding:0;">
@@ -32,11 +34,10 @@
 							<img src="{f:uri.resource(path:'Images/mail.gif')}" />
 						</a>
 						<a class="addthis_button_facebook" style="padding:0;">
-							<img src="{f:uri.resource(path:'Images/share.gif')" />
+							<img src="{f:uri.resource(path:'Images/share.gif')}" />
 						</a>
 					</div>
 					<!-- AddThis Button END -->
-				</div>
 			</div>
 		</f:for>
 		
