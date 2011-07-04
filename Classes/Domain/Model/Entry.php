@@ -215,12 +215,30 @@ class Tx_AudioGallery_Domain_Model_Entry extends Tx_Extbase_DomainObject_Abstrac
 	}
 	
 	/**
+	 * Returns the absolute url of the audio file.
+	 * 
+	 * @return string
+	 */
+	public function getAudioFileUrl() {
+		return t3lib_div::getIndpEnv('TYPO3_SITE_URL').$this->getAudioFileSrc();
+	}
+	
+	/**
 	 * Returns source of preview image
 	 *
 	 * @return string Src to preview image
 	 */
 	public function getPreviewImageSrc() {
 		return self::UPLOAD_FOLDER . $this->previewImagePath;
+	}
+	
+	/**
+	 * Returns the external url of the preview image.
+	 * 
+	 * @return string
+	 */
+	public function getPreviewImageUrl() {
+		return t3lib_div::getIndpEnv('TYPO3_SITE_URL').$this->getPreviewImageSrc();
 	}
 	
 }

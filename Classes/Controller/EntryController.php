@@ -85,20 +85,38 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 * @param Tx_AudioGallery_Domain_Model_Entry $entry
 	 */
 	private function addOpenGraphMetaTags(Tx_AudioGallery_Domain_Model_Entry $entry){
-		$flashConfigGenerator = $this->objectManager->get ('Tx_Jwplayer_FlashConfigGenerator');
+		$flashConfigGenerator	= $this->objectManager->get ('Tx_Jwplayer_FlashConfigGenerator');
+		$jwPid					= $this->getJWPlayerSinglePageId();
+		
+		/* generate the expected arguments for the jwplayer controller*/
 		$arguments = array();
 		$arguments['tx_jwplayer_pi1'] = array();
 		$arguments['tx_jwplayer_pi1']['action'] = 'showVideo';
-		$arguments['tx_jwplayer_pi1']['controller'] = 'Entry';
-		$settings['image'] = $entry->getPreviewImageSrc();
-		$settings['autostart']= TRUE;
-		$settings['file']= $entry->getAudioFileSrc();
-		$arguments['tx_jwplayer_pi1']['flash_player_config'] = $flashConfigGenerator->encode($settings, $entry->getPreviewImagePath().$entry->getPreviewImagePath() );
-		$url = $this->uriBuilder->setArguments($arguments)->setCreateAbsoluteUri(TRUE)->buildFrontendUri();
+		$arguments['tx_jwplayer_pi1']['controller'] = 'Player';
+		
+		$settings['autostart']	= TRUE;
+		$settings['audio']		= $entry->getAudioFileUrl();
+		
+		$arguments['tx_jwplayer_pi1']['flash_player_config'] = $flashConfigGenerator->encode($settings, $entry->getPreviewImageUrl());
+		$url = $this->uriBuilder->setTargetPageUid($jwPid)->setArguments($arguments)->setCreateAbsoluteUri(TRUE)->buildFrontendUri();
+		
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:type" content="video"/>' );
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta name="medium" content="video"/>' );
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video" content="'.$url.'"/>' );
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:type" content="application/x-shockwave-flash"/>' );
+	}
+	/**
+	 * Read the configured pageid where the jwplayer plugin for facebook redirects is installed.
+	 * 
+	 * @return int
+	 */
+	protected function getJWPlayerSinglePageId() {
+		if(array_key_exists('single_view_jwplayer',$this->settings) && $this->settings['single_view_jwplayer'] != 0){
+			$pid = $this->settings['single_view_jwplayer'];
+		} else {
+			throw new Exception('No jwplayer single view configured');
+		}
+		return $pid;
 	}
 	/**
 	 * @param $entries

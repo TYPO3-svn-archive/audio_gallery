@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<ROOT>
+		<type>array</type>
+		<el>
+			<settings.single_view_jwplayer>
+				<TCEforms>
+					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.audio_gallery.field.jwplayer_singlepage</label>
+					<config>
+						<type>group</type>
+						<internal_type>db</internal_type>
+						<allowed>pages</allowed>
+						<size>1</size>
+						<maxitems>1</maxitems>
+						<minitems>1</minitems>
+					</config>
+				</TCEforms>
+			</settings.single_view_jwplayer>
+		</el>
+	</ROOT>
+</T3DataStructure>

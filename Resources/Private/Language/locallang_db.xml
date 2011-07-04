@@ -17,6 +17,8 @@
 			<label index="tx_audiogallery_domain_model_filtergroup">Filter Group</label>
 			<label index="tx_audiogallery_domain_model_filtergroup.name">Name</label>
 			<label index="tx_audiogallery_domain_model_filtergroup.filter_item">Filter Item</label>
+			
+			<label index="flexform.audio_gallery.field.jwplayer_singlepage">JWPlayer SingleView (for Facetbook)</label>
 		</languageKey>
 	</data>
 </T3locallang>
