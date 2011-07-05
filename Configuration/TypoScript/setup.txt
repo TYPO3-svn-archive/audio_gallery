@@ -3,6 +3,6 @@ plugin.tx_audiogallery.settings {
 		volume = 15
 		height = 80
 		width = 123
-		skin = fileadmin/files_congstar/bekle/bekle.xml
+		skin = fileadmin/templates/congstar/video_player/jwplayer_skin/cng.xml
 	}
 }
