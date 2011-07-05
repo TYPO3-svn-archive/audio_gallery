@@ -38,6 +38,11 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	protected $filterGroupRepository;
 	
 	/**
+	 * @var Tx_AudioGallery_Domain_Repository_FilterItemRepository
+	 */
+	protected $filterItemRepository;
+	
+	/**
 	 * @var Tx_AudioGallery_Domain_Repository_EntryRepository
 	 */
 	protected $entryRepository;
@@ -47,11 +52,8 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 */
 	protected function initializeAction() {
 		$this->filterGroupRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_FilterGroupRepository' );
+		$this->filterItemRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_FilterItemRepository' );
 		$this->entryRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_EntryRepository' );
-
-		$extPath = t3lib_extMgm::siteRelPath ( 'jwplayer' );
-		$file = $extPath . 'Resources/Public/Player/jwplayer.js';
-		$GLOBALS ['TSFE']->getPageRenderer ()->addJsLibrary ( 'jwplayer', $file, 'text/javascript',TRUE ,TRUE);
 	}
 	
 	/**
@@ -61,13 +63,19 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 */
 	public function indexAction() {
 		$filterGroups = $this->filterGroupRepository->findAll();
-		$entries = $this->entryRepository->findAll();
-		$entries = $this->addJwplayerConfig($entries);
+		$selectedFilterItems = $this->getSelectedFilterItems();
+		$filterGroups = $this->addSelectedFilterItems($filterGroups, $selectedFilterItems);
+
+		$entries = $this->entryRepository->findAllFiltered($selectedFilterItems);
+		
 		$codeGenerator = $this->objectManager->get ('Tx_Addthis_CodeGenerator');
+
+		$this->view->assign('jwplayer_config',$this->getJwplayerConfig());
 		$this->view->assign('addthis_config',$codeGenerator->getConfigJs());
 		$this->view->assign('addthis_jsurl',$codeGenerator->getJsImport());
-		$this->view->assign ( 'filterGroups', $filterGroups );
-		$this->view->assign ( 'entries', $entries );
+		$this->view->assign ('filterGroups', $filterGroups );
+		$this->view->assign ('selectedFilterItems', $this->getUidList($selectedFilterItems) );
+		$this->view->assign ('entries', $entries );
 	}
 	/**
 	 * show single entry
@@ -106,6 +114,77 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:type" content="application/x-shockwave-flash"/>' );
 	}
 	/**
+	 * Returns active filter items
+	 * @return array $selectedFilterItems
+	 */
+	protected function getSelectedFilterItems() {
+	
+		$selectedFilterItems = array();
+		if ($this->request->hasArgument ( 'filterGroup' ) && $this->request->hasArgument ( 'selectedFilterItems' )) {
+			$filterGroupUid = $this->request->getArgument ( 'filterGroup' );
+			$filterGroup = $this->filterGroupRepository->findByUid($filterGroupUid);
+			
+			$selectedFilterItemsUids = $this->request->getArgument ( 'selectedFilterItems' );
+			
+			//Remove filters which aren't selected anymore
+			if (strlen($selectedFilterItemsUids) !== 0) {
+				$selectedFilterItemsUids = explode(',', $selectedFilterItemsUids);
+				foreach ($selectedFilterItemsUids as $selectedFilterItemsUid) {
+					$selectedFilterItems[] = $this->filterItemRepository->findByUid($selectedFilterItemsUid);
+				}
+	
+				foreach ($selectedFilterItems as $key => $selectedFilterItem) {
+					if ($filterGroup->getFilterItem()->contains($selectedFilterItem)) {
+						unset($selectedFilterItems[$key]);
+					}
+				}
+			}
+			
+			if ($this->request->hasArgument ( 'filterItem' )) {
+				$filterItemUid = $this->request->getArgument ( 'filterItem' );
+				$filterItem = $this->filterItemRepository->findByUid($filterItemUid);
+				$selectedFilterItems[] = $filterItem;
+			}
+			
+		}
+
+		return $selectedFilterItems;
+	}
+	/**
+	 * Add selected filter items
+	 * @param array $filterGroups
+	 * @param array $selectedFilterItems
+	 * @return array $filterGroups
+	 */
+	protected function addSelectedFilterItems($filterGroups, $selectedFilterItems) {
+
+		foreach ($filterGroups as $filterGroup) {
+			foreach ($selectedFilterItems as $selectedFilterItem) {
+				if ($filterGroup->getFilterItem()->contains($selectedFilterItem)) {
+					$filterGroup->setSelectedFilterItem($selectedFilterItem);
+				}
+			}
+		}
+		
+
+		return $filterGroups;
+	}
+	/**
+	 * Returns comma seperated list with uids
+	 * @param array $array array of objects
+	 * @return string $list comma seperated list
+	 */
+	protected function getUidList($array) {
+		
+		$listArray = '';
+		foreach($array as $item) {
+			$listArray[] = $item->getUid();
+		}
+		$list = implode(",", $listArray);
+		
+		return $list;
+	}
+	/**
 	 * Read the configured pageid where the jwplayer plugin for facebook redirects is installed.
 	 * 
 	 * @return int
@@ -119,23 +198,30 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		return $pid;
 	}
 	/**
-	 * @param $entries
+	 * Returns cofnig for jwplayer
+	 * @return array $config
 	 */
-	protected function addJwplayerConfig($entries) {
-		foreach ($entries as $entry) {
-			$settings = array();
-			$settings['player_id'] = 'player' . $entry->getUid();
-			$settings['file'] = $entry->getAudioFileSrc();
-			$settings['image'] = $entry->getPreviewImageSrc();
-			$settings['volume'] = 15;
-			$settings['height'] = 80;
-			$settings['width'] = 123;
-			$settings['skin'] = 'fileadmin/files_congstar/bekle/bekle.xml';
-			$config = new Tx_Jwplayer_Config();
-			$config->setSettings($settings);
-			$entry->setJwplayerConfig($config->getJsConfig());
-		}
-		return $entries;
+	protected function getJwplayerConfig() {
+		$settings = array();
+		$settings['volume'] = intval($this->settings['jwplayer']['volume']);
+		$settings['height'] = intval($this->settings['jwplayer']['height']);
+		$settings['width'] = intval($this->settings['jwplayer']['width']);
+		$settings['skin'] = $this->settings['jwplayer']['skin'];
+		$settings['flashplayer'] = $this->settings['jwplayer']['flashplayer'];
+		$settings['backcolor'] = $this->settings['jwplayer']['backcolor'];
+		$settings['fontcolor'] = $this->settings['jwplayer']['fontcolor'];
+		$settings['lightcolor'] = $this->settings['jwplayer']['lightcolor'];
+		$settings['screencolor'] = $this->settings['jwplayer']['screenscolor'];
+		$settings['bufferlength'] = intval($this->settings['jwplayer']['bufferlength']);
+		$settings['autostart'] = $this->settings['jwplayer']['autostart'];
+		$settings['mute'] = $this->settings['jwplayer']['mute'];
+		$settings['stretching'] = $this->settings['jwplayer']['stretching'];
+		$settings['repeat'] = $this->settings['jwplayer']['repeat'];
+		
+		$config = new Tx_Jwplayer_Config();
+		$config->setSettings($settings);
+		
+		return $config->getJsConfig();
 	}
 	/**
 	 * Method for displaying custom error flash messages, or to display no flash message at all on errors.

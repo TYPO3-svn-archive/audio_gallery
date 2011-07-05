@@ -19,6 +19,37 @@
 					</config>
 				</TCEforms>
 			</settings.single_view_jwplayer>
+			<settings.pagination_itemsPerPage>
+				<TCEforms>
+					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.entry.field.pagination_itemsPerPage</label>
+					<config>
+						<type>input</type>
+						<default>12</default>
+						<size>4</size>
+						<max>4</max>
+						<eval>int</eval>
+						<checkbox>0</checkbox>
+					</config>
+				</TCEforms>
+			</settings.pagination_itemsPerPage>
+			<settings.pagination_insertAbove>
+				<TCEforms>
+					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.picture.field.pagination_insertAbove</label>
+					<config>
+						<type>check</type>
+						<default>1</default>
+					</config>
+				</TCEforms>
+			</settings.pagination_insertAbove>
+			<settings.pagination_insertBelow>
+				<TCEforms>
+					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.picture.field.pagination_insertBelow</label>
+					<config>
+						<type>check</type>
+						<default>1</default>
+					</config>
+				</TCEforms>
+			</settings.pagination_insertBelow>
 		</el>
 	</ROOT>
 </T3DataStructure>
