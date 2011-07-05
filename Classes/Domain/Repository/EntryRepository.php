@@ -32,5 +32,42 @@
  */
 class Tx_AudioGallery_Domain_Repository_EntryRepository extends Tx_Extbase_Persistence_Repository {
 
+	/**
+	 * Gives entries with forwarded filter items
+	 * @param array $selectedFilterItems selectedFilters
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_AudioGallery_Domain_Model_FilterItem>
+	 */
+	public function findAllFiltered($selectedFilterItems) {
+
+		$extbaseFrameworkConfiguration = Tx_Extbase_Dispatcher::getExtbaseFrameworkConfiguration();
+		$pidList = implode(', ', t3lib_div::intExplode(',', $extbaseFrameworkConfiguration['persistence']['storagePid']));
+
+		$sql = "SELECT DISTINCT e.*
+				FROM tx_audiogallery_domain_model_entry e
+					JOIN tx_audiogallery_entry_filteritem_mm m
+						ON e.uid = m.uid_local
+					JOIN tx_audiogallery_domain_model_filteritem f
+						ON m.uid_foreign = f.uid
+				WHERE e.deleted + f.deleted = 0
+					AND e.pid IN(".$pidList.")
+					AND f.pid IN(".$pidList.")
+				ORDER BY e.title DESC";
+
+		foreach ($selectedFilterItems as $selectedFilterItem) {
+			$sql = "SELECT e.*
+					FROM (".$sql.") e
+						JOIN tx_audiogallery_entry_filteritem_mm m
+							ON e.uid = m.uid_local
+						JOIN tx_audiogallery_domain_model_filteritem f
+							ON m.uid_foreign = f.uid
+					WHERE f.uid = ".$selectedFilterItem->getUid();
+		}
+		
+		$query = $this->createQuery();
+		$query->statement($sql);
+		
+		return $query->execute();
+		
+	}
 
 }

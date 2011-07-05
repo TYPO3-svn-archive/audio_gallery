@@ -44,6 +44,13 @@ class Tx_AudioGallery_Domain_Model_FilterGroup extends Tx_Extbase_DomainObject_A
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_AudioGallery_Domain_Model_FilterItem>
 	 */
 	protected $filterItem;
+	
+	/**
+	 * selectedFilterItem
+	 * @var Tx_AudioGallery_Domain_Model_FilterItem
+	 */
+	protected $selectedFilterItem;
+	
 	/**
 	 * The constructor. Initializes all Tx_Extbase_Persistence_ObjectStorage instances.
 	 */
@@ -106,6 +113,25 @@ class Tx_AudioGallery_Domain_Model_FilterGroup extends Tx_Extbase_DomainObject_A
 	 */
 	public function removeFilterItem(Tx_AudioGallery_Domain_Model_FilterItem $filterItem) {
 		$this->filterItem->detach($filterItem);
+	}
+	
+	/**
+	 * Setter for selectedFilterItem
+	 *
+	 * @param Tx_AudioGallery_Domain_Model_FilterItem $selectedFilterItem selectedFilterItem
+	 * @return void
+	 */
+	public function setSelectedFilterItem($selectedFilterItem) {
+		$this->selectedFilterItem = $selectedFilterItem;
+	}
+
+	/**
+	 * Getter for selectedFilterItem
+	 *
+	 * @return Tx_AudioGallery_Domain_Model_FilterItem selectedFilterItem
+	 */
+	public function getSelectedFilterItem() {
+		return $this->selectedFilterItem;
 	}
 	
 }

@@ -1,29 +1,27 @@
-{namespace addthis=Tx_Jwplayer_ViewHelpers}
 <div class="jwplayer">
-	<p id="{entry.jwplayerConfig.player_id}">Video is loading ...</p>
+	<p id="player_{entry.uid}">Video is loading ...</p>
 </div>
+
 <script type="text/javascript" src="typo3conf/ext/jwplayer/Resources/Public/Player/jwplayer.js"></script>
 <script type="text/javascript">
 	
-	var player_id = "{entry.jwplayerConfig.player_id}";
-	var flashplayer = "{entry.jwplayerConfig.flashplayer}";
-	var backcolor = "{entry.jwplayerConfig.backcolor}";
-	var fontcolor = "{entry.jwplayerConfig.fontcolor}";
-	var lightcolor = "{entry.jwplayerConfig.lightcolor}";
-	var screencolor = "{entry.jwplayerConfig.screenscolor}";
-	var controlbar = "{entry.jwplayerConfig.controlbar}";
-	var file = "{entry.jwplayerConfig.file}";
-	var width = "{entry.jwplayerConfig.width}";
-	var height = "{entry.jwplayerConfig.height}";
-	var bufferlength = "{entry.jwplayerConfig.bufferlength}";
-	var volume = "{entry.jwplayerConfig.volume}";
-	var autostart = "{entry.jwplayerConfig.autostart}";
-	var mute = "{entry.jwplayerConfig.mute}";
-	var stretching = "{entry.jwplayerConfig.stretching}";
-	var repeat = "{entry.jwplayerConfig.repeat}";
-	var image = "{entry.jwplayerConfig.image}";
-	var skin = "{entry.jwplayerConfig.skin}";
-	var facebookPlugin = "{entry.jwplayerConfig.facebookPlugin}";
+	var file = "{entry.audioFileSrc}";
+	var image = "{entry.previewImageSrc}";
+	var player_id = "player_{entry.uid}";
+	var flashplayer = "{jwplayer_config.flashplayer}";
+	var backcolor = "{jwplayer_config.backcolor}";
+	var fontcolor = "{jwplayer_config.fontcolor}";
+	var lightcolor = "{jwplayer_config.lightcolor}";
+	var screencolor = "{jwplayer_config.screenscolor}";
+	var width = "{jwplayer_config.width}";
+	var height = "{jwplayer_config.height}";
+	var bufferlength = "{jwplayer_config.bufferlength}";
+	var volume = "{jwplayer_config.volume}";
+	var autostart = "{jwplayer_config.autostart}";
+	var mute = "{jwplayer_config.mute}";
+	var stretching = "{jwplayer_config.stretching}";
+	var repeat = "{jwplayer_config.repeat}";
+	var skin = "{jwplayer_config.skin}";
 
 	/* <![CDATA[ */
 	var config = {
@@ -37,7 +35,6 @@
 		width: width,
 		bufferlength:bufferlength,
 		autostart:autostart,
-		controlbar:controlbar,
 		mute:mute,
 		volume:volume,
 		skin:skin
@@ -60,13 +57,6 @@
 	}
 	if(stretching != ""){
 		config.stretching = stretching;
-	}
-	if(facebookPlugin){
-		var plugins = {};
-		plugins.fbit = {
-			dock:true
-		};
-		config.plugins = plugins;
 	}
 	
 	// init player

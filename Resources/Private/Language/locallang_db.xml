@@ -6,7 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="tx_audiogallery_domain_model_entry">Entry</label>
+			<label index="tx_audiogallery_domain_model_entry">Audio Entry</label>
 			<label index="tx_audiogallery_domain_model_entry.title">Title</label>
 			<label index="tx_audiogallery_domain_model_entry.author">Author</label>
 			<label index="tx_audiogallery_domain_model_entry.audio_file_path">Audio File Path</label>
@@ -17,8 +17,9 @@
 			<label index="tx_audiogallery_domain_model_filtergroup">Filter Group</label>
 			<label index="tx_audiogallery_domain_model_filtergroup.name">Name</label>
 			<label index="tx_audiogallery_domain_model_filtergroup.filter_item">Filter Item</label>
-			
-			<label index="flexform.audio_gallery.field.jwplayer_singlepage">JWPlayer SingleView (for Facetbook)</label>
+			<label index="flexform.entry.field.pagination_itemsPerPage">Entries per page</label>
+			<label index="flexform.picture.field.pagination_insertAbove">Display pagination above</label>
+			<label index="flexform.picture.field.pagination_insertBelow">Display pagination below</label>
 		</languageKey>
 	</data>
 </T3locallang>

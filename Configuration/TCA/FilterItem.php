@@ -70,11 +70,6 @@ $TCA['tx_audiogallery_domain_model_filteritem'] = array(
 				'eval' => 'trim,required'
 			)
 		),
-		'entry' => array(
-			'config' => array(
-				'type'	=> 'passthrough'
-			)
-		),
 		'filtergroup' => array(
 			'config' => array(
 				'type'	=> 'passthrough'

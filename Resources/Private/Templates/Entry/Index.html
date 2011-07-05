@@ -2,17 +2,29 @@
 <f:layout name="default" />
 <f:section name="main">
 	<div class="audio-gallery">
-		
 		<div class="filters">
 			<div class="filter-area">
-				<f:form action="index">
-					<f:for each="{filterGroups}" as="filterGroup">
-						<f:form.select name="{filterGroup.name}" options="{filterGroup.filterItem}" />
-					</f:for>
-				</f:form>
-			</div>
+				<f:for each="{filterGroups}" as="filterGroup">
+					<span class="filter-area-title">{filterGroup.name}</span>
+					<dl class="filter">
+						<dt class="filter-head skin-color">
+							<f:if condition="{filterGroup.selectedFilterItem}">
+								<f:then>{filterGroup.selectedFilterItem.name}</f:then>
+								<f:else><f:translate key="all"/></f:else>
+							</f:if></dt>
+						<dd class="filter-body">
+							<ul>
+								<f:for each="{filterGroup.filterItem}" as="filterItem">
+									<li><f:link.action action="index" arguments="{filterGroup : filterGroup,  filterItem : filterItem, selectedFilterItems:selectedFilterItems}">{filterItem.name}</f:link.action></li>
+								</f:for>
+								<li><f:link.action action="index" arguments="{filterGroup : filterGroup, selectedFilterItems:selectedFilterItems}"><f:translate key="all"/></f:link.action></li>
+							</ul>
+						</dd>
+					</dl>
+				</f:for>
+			</div><!-- filter-area -->
 			<div class="paging-area">
-				<f:widget.paginate objects="{entries}" as="paginatedEntries" configuration="{itemsPerPage: 12, insertAbove: 1, insertBelow: 1}">
+				<f:widget.paginate objects="{entries}" as="paginatedEntries" configuration="{itemsPerPage: settings.pagination_itemsPerPage, insertAbove: settings.pagination_insertAbove, insertBelow: settings.pagination_insertBelow}">
 			</div>
 		</div>
 		
@@ -21,7 +33,7 @@
 				<p>{entry.title}</p>
 				<h3 class="skin-color">{entry.author}</h3>
 				<div class="background skin-back">
-					<f:render partial="jwplayer" arguments="{entry:entry}" />
+					<f:render partial="jwplayer" arguments="{entry:entry, jwplayer_config:jwplayer_config}" />
 				</div>
 				<f:render partial="Addthis" arguments="{entry:entry}" />
 			</div>

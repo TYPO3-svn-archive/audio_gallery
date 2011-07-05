@@ -36,7 +36,6 @@ CREATE TABLE tx_audiogallery_domain_model_filteritem (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	
-	entry int(11) unsigned DEFAULT '0' NOT NULL,
 	filtergroup int(11) unsigned DEFAULT '0' NOT NULL,
 	
 	name varchar(255) DEFAULT '' NOT NULL,
@@ -90,6 +89,24 @@ CREATE TABLE tx_audiogallery_domain_model_filtergroup (
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l18n_parent int(11) DEFAULT '0' NOT NULL,
 	l18n_diffsource mediumblob NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid)
+);
+
+CREATE TABLE tx_audiogallery_entry_filteritem_mm (
+	uid int(10) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	tablenames varchar(255) DEFAULT '' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	
+	tstamp int(10) unsigned DEFAULT '0' NOT NULL,
+	crdate int(10) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(3) unsigned DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
