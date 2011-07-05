@@ -217,6 +217,7 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		$settings['mute'] = $this->settings['jwplayer']['mute'];
 		$settings['stretching'] = $this->settings['jwplayer']['stretching'];
 		$settings['repeat'] = $this->settings['jwplayer']['repeat'];
+		$settings['controlbar'] = $this->settings['jwplayer']['controlbar'];
 		
 		$config = new Tx_Jwplayer_Config();
 		$config->setSettings($settings);

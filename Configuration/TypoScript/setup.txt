@@ -4,5 +4,6 @@ plugin.tx_audiogallery.settings {
 		height = 80
 		width = 123
 		skin = fileadmin/templates/congstar/video_player/jwplayer_skin/cng.xml
+		controlbar = bottom
 	}
 }
