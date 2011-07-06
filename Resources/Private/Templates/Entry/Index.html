@@ -3,44 +3,46 @@
 <f:section name="main">
 	<div class="audio-gallery">
 		<div class="filters">
-			<div class="filter-area">
-				<span class="filter-area-title"><f:translate key="filters.filterOne.name"/></span>
-				<dl class="filter">
-					<dt class="filter-head skin-color">
-						<f:if condition="{filterOne.selectedItem.name}">
-							<f:then>{filterOne.selectedItem.name}</f:then>
-							<f:else><f:translate key="filters.all"/></f:else>
-						</f:if>
-					</dt>
-					<dd class="filter-body">
-						<ul>
-							<f:for each="{filterOne.items}" as="item">
-								<li><f:link.action action="index" arguments="{filterOneItem : item, filterTwoItem : filterTwo.selectedItem}">{item.name}</f:link.action></li>
-							</f:for>
-							<li><f:link.action action="index" arguments="{filterTwoItem : filterTwo.selectedItem}"><f:translate key="filters.all"/></f:link.action></li>
-						</ul>
-					</dd>
-				</dl>
-			</div>
-			<div class="filter-area">
-				<span class="filter-area-title"><f:translate key="filters.filterTwo.name"/></span>
-				<dl class="filter">
-					<dt class="filter-head skin-color">
-						<f:if condition="{filterTwo.selectedItem.name}">
-							<f:then>{filterTwo.selectedItem.name}</f:then>
-							<f:else><f:translate key="filters.all"/></f:else>
-						</f:if>
-					</dt>
-					<dd class="filter-body">
-						<ul>
-							<f:for each="{filterTwo.items}" as="item">
-								<li><f:link.action action="index" arguments="{filterTwoItem : item, filterOneItem : filterOne.selectedItem}">{item.name}</f:link.action></li>
-							</f:for>
-							<li><f:link.action action="index" arguments="{filterOneItem : filterOne.selectedItem}"><f:translate key="filters.all"/></f:link.action></li>
-						</ul>
-					</dd>
-				</dl>
-			</div>
+			<f:if condition="{settings.filters_display}">
+				<div class="filter-area">
+					<span class="filter-area-title"><f:translate key="filters.filterOne.name"/></span>
+					<dl class="filter">
+						<dt class="filter-head skin-color">
+							<f:if condition="{filterOne.selectedItem.name}">
+								<f:then>{filterOne.selectedItem.name}</f:then>
+								<f:else><f:translate key="filters.all"/></f:else>
+							</f:if>
+						</dt>
+						<dd class="filter-body">
+							<ul>
+								<f:for each="{filterOne.items}" as="item">
+									<li><f:link.action action="index" arguments="{filterOneItem : item, filterTwoItem : filterTwo.selectedItem}">{item.name}</f:link.action></li>
+								</f:for>
+								<li><f:link.action action="index" arguments="{filterTwoItem : filterTwo.selectedItem}"><f:translate key="filters.all"/></f:link.action></li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+				<div class="filter-area">
+					<span class="filter-area-title"><f:translate key="filters.filterTwo.name"/></span>
+					<dl class="filter">
+						<dt class="filter-head skin-color">
+							<f:if condition="{filterTwo.selectedItem.name}">
+								<f:then>{filterTwo.selectedItem.name}</f:then>
+								<f:else><f:translate key="filters.all"/></f:else>
+							</f:if>
+						</dt>
+						<dd class="filter-body">
+							<ul>
+								<f:for each="{filterTwo.items}" as="item">
+									<li><f:link.action action="index" arguments="{filterTwoItem : item, filterOneItem : filterOne.selectedItem}">{item.name}</f:link.action></li>
+								</f:for>
+								<li><f:link.action action="index" arguments="{filterOneItem : filterOne.selectedItem}"><f:translate key="filters.all"/></f:link.action></li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</f:if>
 			<div class="paging-area">
 				<f:widget.paginate objects="{entries}" as="paginatedEntries" configuration="{itemsPerPage: settings.pagination_itemsPerPage, insertAbove: settings.pagination_insertAbove, insertBelow: settings.pagination_insertBelow}">
 			</div>

@@ -55,6 +55,8 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		$this->filterOneItemRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_FilterOneItemRepository' );
 		$this->filterTwoItemRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_FilterTwoItemRepository' );
 		
+		$file = t3lib_extMgm::siteRelPath ( 'jwplayer' ) . 'Resources/Public/Player/jwplayer.js';
+		$GLOBALS ['TSFE']->getPageRenderer ()->addJsFile ( $file );
 	}
 	
 	/**
