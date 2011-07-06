@@ -1,6 +1,16 @@
 <!-- AddThis Button BEGIN -->
 <div class="addthis_toolbox addthis_default_style" addthis:url="{f:uri.action(pageUid: settings.singleView, controller:'Entry',action:'show',absolute:1,arguments:{entry:entry})}" addthis:title="{entry.title}">
-	<f:link.action class="download-link" action="download" arguments="{entry : entry}"><img src="{f:uri.resource(path:'Images/more.png')}" /></f:link.action>
+	<f:link.action class="download-link" action="download" arguments="{entry : entry}">
+		<f:if condition="{largeButton}">
+			<f:then>
+				<img src="{f:uri.resource(path:'Images/download.png')}" />
+			</f:then>
+			<f:else>
+				<img src="{f:uri.resource(path:'Images/more.png')}" />
+			</f:else>
+		</f:if>	
+	
+	</f:link.action>
 	<a class="addthis_button_email">
 		<img src="{f:uri.resource(path:'Images/mail.png')}" />
 	</a>

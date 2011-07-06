@@ -1,16 +1,28 @@
 {namespace addthis=Tx_Addthis_ViewHelpers}
 <f:layout name="default" />
 <f:section name="main">
-	<div class="entry" id="entry_{entry.uid}">
-		<p>{entry.title}</p>
-		<h3 class="skin-color">{entry.author}</h3>
-		<div class="background skin-back">
-			<f:render partial="jwplayer" arguments="{entry:entry, jwplayer_config:jwplayer_config}" />
+	<div class="audio-single-view">
+		<div class="single-entry" id="entry_{entry.uid}">
+	
+			<div class="video">
+				<div class="background skin-back">
+					<f:render partial="jwplayer" arguments="{entry:entry, jwplayer_config:jwplayer_config}" />
+				</div>
+			</div>
+			
+			<div class="content">
+				<h1 class="skin-color">Dein Sound</h1>
+				<p>{entry.title}</p>
+				<p class="skin-color">{entry.author}</p>
+				
+				<f:render partial="Addthis" arguments="{entry:entry, largeButton: 1}" />
+			</div>
+			
+			<div class="clear"></div>
 		</div>
-		<f:render partial="Addthis" arguments="{entry:entry}" />
+		<script type="text/javascript">
+			<addthis:rawValue value="{addthis_config}" />
+		</script>
+		<script type="text/javascript" src="{addthis_jsurl}"></script>
 	</div>
-	<script type="text/javascript">
-		<addthis:rawValue value="{addthis_config}" />
-	</script>
-	<script type="text/javascript" src="{addthis_jsurl}"></script>
 </f:section>

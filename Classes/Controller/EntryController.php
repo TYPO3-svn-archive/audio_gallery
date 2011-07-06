@@ -130,19 +130,22 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		$arguments['tx_jwplayer_pi1']['flash_player_config'] = $flashConfigGenerator->encode($settings, $entry->getPreviewImageUrl());
 		$videourl = $this->uriBuilder->setTargetPageUid($jwPid)->setArguments($arguments)->setCreateAbsoluteUri(TRUE)->buildFrontendUri();
 		$title = $entry->getMetaTitle();
+		$image = $entry->getPreviewImageUrl();
 
 		
-	/*	$argumentsSingleView = array();
+		$argumentsSingleView = array();
 		$argumentsSingleView['tx_audiogallery_pi1'] = array();
 		$argumentsSingleView['tx_audiogallery_pi1']['action'] = 'show';
 		$argumentsSingleView['tx_audiogallery_pi1']['controller'] = 'Entry';	
 		$argumentsSingleView['tx_audiogallery_pi1']['entry'] = $entry->getUid();
 		$singleViewPid = $this->getSingleViewPageId();	
-		$singleViewUrl = $this->uriBuilder->setTargetPageUid($singleViewPid)->setArguments($argumentsSingleView)->setCreateAbsoluteUri(TRUE)->buildFrontendUri(); */
+		$singleViewUrl = $this->uriBuilder->setTargetPageUid($singleViewPid)->setArguments($argumentsSingleView)->setCreateAbsoluteUri(TRUE)->buildFrontendUri(); 
 
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta name="medium" content="video"/>' );
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:type" content="video"/>' );
-	//	$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:url" content="'.$singleViewUrl.'"/>' );
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:url" content="'.$singleViewUrl.'"/>' );
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:site_name" content="andywillwechseln.de"/>' );
+		
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:title" content="'.$title.'"/>' );
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:image" content="'.$image.'" />');
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video" content="'.$videourl.'"/>' );
