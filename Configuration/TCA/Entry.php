@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_audiogallery_domain_model_entry'] = array(
 	'ctrl' => $TCA['tx_audiogallery_domain_model_entry']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList'	=> 'title,author,audio_file_path,preview_image_path,filter_item'
+		'showRecordFieldList'	=> 'title,author,audio_file_path,preview_image_path,filter_one_item,filter_two_item'
 	),
 	'types' => array(
-		'1' => array('showitem'	=> 'title,author,audio_file_path,preview_image_path,filter_item')
+		'1' => array('showitem'	=> 'title,author,audio_file_path,preview_image_path,filter_one_item,filter_two_item')
 	),
 	'palettes' => array(
 		'1' => array('showitem'	=> '')
@@ -111,19 +111,17 @@ $TCA['tx_audiogallery_domain_model_entry'] = array(
 				'minitems' => '0'	
 			)
 		),
-		'filter_item' => array(
+		'filter_one_item' => array(
 			'exclude'	=> 0,
-			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.filter_item',
+			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.filter_one_item',
 			'config'	=> array(
 				'type' => 'select',
-				'foreign_table' => 'tx_audiogallery_domain_model_filteritem',
-				'MM' => 'tx_audiogallery_entry_filteritem_mm',
-				'size' => 10,
-				'autoSizeMax' => 30,
-				'maxitems' => 9999,
+				'foreign_table' => 'tx_audiogallery_domain_model_filteroneitem',
+				'minitems' => 0,
+				'maxitems' => 1,
 				'wizards' => array(
 					'_PADDING' => 1,
-					'_VERTICAL' => 1,
+					'_VERTICAL' => 0,
 					'edit' => array(
 						'type' => 'popup',
 						'title' => 'Edit',
@@ -137,7 +135,40 @@ $TCA['tx_audiogallery_domain_model_entry'] = array(
 						'title' => 'Create new',
 						'icon' => 'add.gif',
 						'params' => array(
-							'table'=>'tx_audiogallery_domain_model_filteritem',
+							'table'=>'tx_audiogallery_domain_model_filteroneitem',
+							'pid' => '###CURRENT_PID###',
+							'setValue' => 'prepend'
+							),
+						'script' => 'wizard_add.php',
+					),
+				),
+			)
+		),
+		'filter_two_item' => array(
+			'exclude'	=> 0,
+			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.filter_two_item',
+			'config'	=> array(
+				'type' => 'select',
+				'foreign_table' => 'tx_audiogallery_domain_model_filtertwoitem',
+				'minitems' => 0,
+				'maxitems' => 1,
+				'wizards' => array(
+					'_PADDING' => 1,
+					'_VERTICAL' => 0,
+					'edit' => array(
+						'type' => 'popup',
+						'title' => 'Edit',
+						'script' => 'wizard_edit.php',
+						'icon' => 'edit2.gif',
+						'popup_onlyOpenIfSelected' => 1,
+						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+						),
+					'add' => Array(
+						'type' => 'script',
+						'title' => 'Create new',
+						'icon' => 'add.gif',
+						'params' => array(
+							'table'=>'tx_audiogallery_domain_model_filtertwoitem',
 							'pid' => '###CURRENT_PID###',
 							'setValue' => 'prepend'
 							),

@@ -24,13 +24,39 @@
 ***************************************************************/
 
 /**
- * Repository for the FilterGroup object
+ * Category for entries (second filter)
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_AudioGallery_Domain_Repository_FilterGroupRepository extends Tx_Extbase_Persistence_Repository {
+class Tx_AudioGallery_Domain_Model_FilterTwoItem extends Tx_Extbase_DomainObject_AbstractEntity {
+	
+	/**
+	 * Name of category
+	 * @var string
+	 * @validate NotEmpty
+	 */
+	protected $name;
+	
+	/**
+	 * Setter for name
+	 *
+	 * @param string $name Name of category
+	 * @return void
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
 
-
+	/**
+	 * Getter for name
+	 *
+	 * @return string Name of category
+	 */
+	public function getName() {
+		return $this->name;
+	}
+	
 }
+?>

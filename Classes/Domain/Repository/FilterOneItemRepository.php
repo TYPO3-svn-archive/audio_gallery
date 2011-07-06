@@ -24,33 +24,13 @@
 ***************************************************************/
 
 /**
- * Repository for the Entry object
+ * Repository for the FilterOneItem object
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_AudioGallery_Domain_Repository_EntryRepository extends Tx_Extbase_Persistence_Repository {
+class Tx_AudioGallery_Domain_Repository_FilterOneItemRepository extends Tx_Extbase_Persistence_Repository {
 
-	/**
-	 * Gives entries with forwarded filter items
-	 * @param Tx_AudioGallery_Domain_Model_FilterOneItem $filterOne
-	 * @param Tx_AudioGallery_Domain_Model_FilterOneItem $filterTwo
-	 * @return array
-	 */
-	public function findAllFiltered(Tx_AudioGallery_Domain_Model_FilterOneItem $filterOne = null, Tx_AudioGallery_Domain_Model_FilterTwoItem $filterTwo = null) {
-		$query = $this->createQuery();
-
-		if ($filterOne !== NULL) {
-			$query->matching($query->logicalAnd($query->equals('filter_one_item', $filterOne->getUid())));
-		} 
-		if ($filterTwo !== NULL) {
-			$query->matching($query->logicalAnd($query->equals('filter_two_item', $filterTwo->getUid())));
-		} 
-		
-		$query->setOrderings ( array ('title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING ) );
-		
-		return $query->execute();
-	}
 
 }

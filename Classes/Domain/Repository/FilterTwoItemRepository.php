@@ -24,13 +24,13 @@
 ***************************************************************/
 
 /**
- * Repository for the FilterItem object
+ * Repository for the FilterTwoItem object
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_AudioGallery_Domain_Repository_FilterItemRepository extends Tx_Extbase_Persistence_Repository {
+class Tx_AudioGallery_Domain_Repository_FilterTwoItemRepository extends Tx_Extbase_Persistence_Repository {
 
 
 }

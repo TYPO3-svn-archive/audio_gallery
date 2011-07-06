@@ -11,13 +11,15 @@
 			<label index="tx_audiogallery_domain_model_entry.author">Autor der Audio-Datei</label>
 			<label index="tx_audiogallery_domain_model_entry.audio_file_path">Pfad zur Audio-Datei</label>
 			<label index="tx_audiogallery_domain_model_entry.preview_image_path">Pfad zu Vorschaubild</label>
-			<label index="tx_audiogallery_domain_model_entry.filter_item">Element einer Filtergruppe</label>
-			<label index="tx_audiogallery_domain_model_filteritem">Filterelement für Audio-Dateien</label>
-			<label index="tx_audiogallery_domain_model_filteritem.name">Name des Filterelements</label>
-			<label index="tx_audiogallery_domain_model_filtergroup">Gruppe von Filterelementen</label>
-			<label index="tx_audiogallery_domain_model_filtergroup.name">Name einer Filtergruppe</label>
-			<label index="tx_audiogallery_domain_model_filtergroup.filter_item">Element einer Filtergruppe</label>
-			<label index="all">Alle</label>
+			<label index="tx_audiogallery_domain_model_entry.filter_one_item">Element des ersten Filters</label>
+			<label index="tx_audiogallery_domain_model_entry.filter_two_item">Element des zweiten Filters</label>
+			<label index="tx_audiogallery_domain_model_filteroneitem">Category for entries (first filter)</label>
+			<label index="tx_audiogallery_domain_model_filteroneitem.name">Name of category</label>
+			<label index="tx_audiogallery_domain_model_filtertwoitem">Category for entries (second filter)</label>
+			<label index="tx_audiogallery_domain_model_filtertwoitem.name">Name of category</label>
+			<label index="filters.filterOne.name">Kategorie:</label>
+			<label index="filters.filterTwo.name">Woche:</label>
+			<label index="filters.all">Alle</label>
 		</languageKey>
 	</data>
 </T3locallang>

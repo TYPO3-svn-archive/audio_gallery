@@ -33,27 +33,28 @@
 class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controller_ActionController {
 
 	/**
-	 * @var Tx_AudioGallery_Domain_Repository_FilterGroupRepository
-	 */
-	protected $filterGroupRepository;
-	
-	/**
-	 * @var Tx_AudioGallery_Domain_Repository_FilterItemRepository
-	 */
-	protected $filterItemRepository;
-	
-	/**
 	 * @var Tx_AudioGallery_Domain_Repository_EntryRepository
 	 */
 	protected $entryRepository;
 	
 	/**
+	 * @var Tx_AudioGallery_Domain_Repository_FilterOneItemRepository
+	 */
+	protected $filterOneItemRepository;
+	
+	/**
+	 * @var Tx_AudioGallery_Domain_Repository_FilterTwoItemRepository
+	 */
+	protected $filterTwoItemRepository;
+	
+	/**
 	 * initialize action
 	 */
 	protected function initializeAction() {
-		$this->filterGroupRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_FilterGroupRepository' );
-		$this->filterItemRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_FilterItemRepository' );
 		$this->entryRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_EntryRepository' );
+		$this->filterOneItemRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_FilterOneItemRepository' );
+		$this->filterTwoItemRepository = $this->objectManager->get ( 'Tx_AudioGallery_Domain_Repository_FilterTwoItemRepository' );
+		
 	}
 	
 	/**
@@ -62,21 +63,21 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 * @return string The rendered list action
 	 */
 	public function indexAction() {
-		$filterGroups = $this->filterGroupRepository->findAll();
-		$selectedFilterItems = $this->getSelectedFilterItems();
-		$filterGroups = $this->addSelectedFilterItems($filterGroups, $selectedFilterItems);
-
-		$entries = $this->entryRepository->findAllFiltered($selectedFilterItems);
+		$filters = $this->getFilters();
+		
+		$entries = $this->entryRepository->findAllFiltered($filters['filterOne']['selectedItem'], $filters['filterTwo']['selectedItem']);
 		
 		$codeGenerator = $this->objectManager->get ('Tx_Addthis_CodeGenerator');
 
 		$this->view->assign('jwplayer_config',$this->getJwplayerConfig());
 		$this->view->assign('addthis_config',$codeGenerator->getConfigJs());
 		$this->view->assign('addthis_jsurl',$codeGenerator->getJsImport());
-		$this->view->assign ('filterGroups', $filterGroups );
-		$this->view->assign ('selectedFilterItems', $this->getUidList($selectedFilterItems) );
+
+		$this->view->assign ('filterOne', $filters['filterOne'] );
+		$this->view->assign ('filterTwo', $filters['filterTwo'] );
 		$this->view->assign ('entries', $entries );
 	}
+	
 	/**
 	 * show single entry
 	 * @param Tx_AudioGallery_Domain_Model_Entry $entry
@@ -89,6 +90,26 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		$this->view->assign('addthis_config',$codeGenerator->getConfigJs());
 		$this->view->assign('addthis_jsurl',$codeGenerator->getJsImport());
 	}
+	
+	/**
+	 * download audio file
+	 * @param Tx_AudioGallery_Domain_Model_Entry $entry
+	 */
+	public function downloadAction(Tx_AudioGallery_Domain_Model_Entry $entry) {
+		$filename = $entry->getTitle().'_'.$entry->getAuthor().'.mp3';
+		$filename = str_replace(' ', '-', $filename);
+		$binaryContent = file_get_contents($entry->getAudioFileUrl());
+		
+		ob_clean ();
+		header ( 'Content-Type: audio/mpeg' );
+		header ( 'Content-Disposition: attachment; filename='.$filename );
+		header ( 'Content-Length: ' . strlen ( $binaryContent ) );
+		header ( 'Cache-Control: private' );
+		header ( 'Pragma: private' );
+		echo $binaryContent;
+		exit ();
+	}
+	
 	/**
 	 * @param Tx_AudioGallery_Domain_Model_Entry $entry
 	 */
@@ -113,77 +134,31 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video" content="'.$url.'"/>' );
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:type" content="application/x-shockwave-flash"/>' );
 	}
+	
 	/**
-	 * Returns active filter items
+	 * Returns array with filter data
 	 * @return array $selectedFilterItems
 	 */
-	protected function getSelectedFilterItems() {
-	
-		$selectedFilterItems = array();
-		if ($this->request->hasArgument ( 'filterGroup' ) && $this->request->hasArgument ( 'selectedFilterItems' )) {
-			$filterGroupUid = $this->request->getArgument ( 'filterGroup' );
-			$filterGroup = $this->filterGroupRepository->findByUid($filterGroupUid);
-			
-			$selectedFilterItemsUids = $this->request->getArgument ( 'selectedFilterItems' );
-			
-			//Remove filters which aren't selected anymore
-			if (strlen($selectedFilterItemsUids) !== 0) {
-				$selectedFilterItemsUids = explode(',', $selectedFilterItemsUids);
-				foreach ($selectedFilterItemsUids as $selectedFilterItemsUid) {
-					$selectedFilterItems[] = $this->filterItemRepository->findByUid($selectedFilterItemsUid);
-				}
-	
-				foreach ($selectedFilterItems as $key => $selectedFilterItem) {
-					if ($filterGroup->getFilterItem()->contains($selectedFilterItem)) {
-						unset($selectedFilterItems[$key]);
-					}
-				}
-			}
-			
-			if ($this->request->hasArgument ( 'filterItem' )) {
-				$filterItemUid = $this->request->getArgument ( 'filterItem' );
-				$filterItem = $this->filterItemRepository->findByUid($filterItemUid);
-				$selectedFilterItems[] = $filterItem;
-			}
-			
-		}
-
-		return $selectedFilterItems;
-	}
-	/**
-	 * Add selected filter items
-	 * @param array $filterGroups
-	 * @param array $selectedFilterItems
-	 * @return array $filterGroups
-	 */
-	protected function addSelectedFilterItems($filterGroups, $selectedFilterItems) {
-
-		foreach ($filterGroups as $filterGroup) {
-			foreach ($selectedFilterItems as $selectedFilterItem) {
-				if ($filterGroup->getFilterItem()->contains($selectedFilterItem)) {
-					$filterGroup->setSelectedFilterItem($selectedFilterItem);
-				}
-			}
+	protected function getFilters() {
+		$filters = array();
+		
+		$filters['filterOne'] = array();
+		$filters['filterOne']['items'] = $this->filterOneItemRepository->findAll();
+		if ($this->request->hasArgument ( 'filterOneItem' )) {
+			$filterOneSelectedItemUid =  intval($this->request->getArgument ( 'filterOneItem' ));
+			$filters['filterOne']['selectedItem'] = $this->filterOneItemRepository->findByUid($filterOneSelectedItemUid);
 		}
 		
-
-		return $filterGroups;
-	}
-	/**
-	 * Returns comma seperated list with uids
-	 * @param array $array array of objects
-	 * @return string $list comma seperated list
-	 */
-	protected function getUidList($array) {
-		
-		$listArray = '';
-		foreach($array as $item) {
-			$listArray[] = $item->getUid();
+		$filters['filterTwo'] = array();
+		$filters['filterTwo']['items'] = $this->filterTwoItemRepository->findAll();
+		if ($this->request->hasArgument ( 'filterTwoItem' )) {
+			$filterTwoSelectedItemUid =  intval($this->request->getArgument ( 'filterTwoItem' ));
+			$filters['filterTwo']['selectedItem'] = $this->filterTwoItemRepository->findByUid($filterTwoSelectedItemUid);
 		}
-		$list = implode(",", $listArray);
-		
-		return $list;
+
+		return $filters;
 	}
+
 	/**
 	 * Read the configured pageid where the jwplayer plugin for facebook redirects is installed.
 	 * 
@@ -197,6 +172,7 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		}
 		return $pid;
 	}
+	
 	/**
 	 * Returns cofnig for jwplayer
 	 * @return array $config
@@ -224,6 +200,7 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		
 		return $config->getJsConfig();
 	}
+	
 	/**
 	 * Method for displaying custom error flash messages, or to display no flash message at all on errors.
 	 * 

@@ -37,11 +37,11 @@ $TCA['tx_audiogallery_domain_model_entry'] = array(
 	)
 );
 
-t3lib_extMgm::addLLrefForTCAdescr('tx_audiogallery_domain_model_filteritem', 'EXT:audio_gallery/Resources/Private/Language/locallang_csh_tx_audiogallery_domain_model_filteritem.xml');
-t3lib_extMgm::allowTableOnStandardPages('tx_audiogallery_domain_model_filteritem');
-$TCA['tx_audiogallery_domain_model_filteritem'] = array(
+t3lib_extMgm::addLLrefForTCAdescr('tx_audiogallery_domain_model_filteroneitem', 'EXT:audio_gallery/Resources/Private/Language/locallang_csh_tx_audiogallery_domain_model_filteroneitem.xml');
+t3lib_extMgm::allowTableOnStandardPages('tx_audiogallery_domain_model_filteroneitem');
+$TCA['tx_audiogallery_domain_model_filteroneitem'] = array(
 	'ctrl' => array(
-		'title'						=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_filteritem',
+		'title'						=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_filteroneitem',
 		'label'						=> 'name',
 		'tstamp'					=> 'tstamp',
 		'crdate'					=> 'crdate',
@@ -55,16 +55,16 @@ $TCA['tx_audiogallery_domain_model_filteritem'] = array(
 		'enablecolumns'				=> array(
 			'disabled'		=> 'hidden'
 		),
-		'dynamicConfigFile'			=> t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/FilterItem.php',
-		'iconfile'					=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_audiogallery_domain_model_filteritem.gif'
+		'dynamicConfigFile'			=> t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/FilterOneItem.php',
+		'iconfile'					=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_audiogallery_domain_model_filteroneitem.gif'
 	)
 );
 
-t3lib_extMgm::addLLrefForTCAdescr('tx_audiogallery_domain_model_filtergroup', 'EXT:audio_gallery/Resources/Private/Language/locallang_csh_tx_audiogallery_domain_model_filtergroup.xml');
-t3lib_extMgm::allowTableOnStandardPages('tx_audiogallery_domain_model_filtergroup');
-$TCA['tx_audiogallery_domain_model_filtergroup'] = array(
+t3lib_extMgm::addLLrefForTCAdescr('tx_audiogallery_domain_model_filtertwoitem', 'EXT:audio_gallery/Resources/Private/Language/locallang_csh_tx_audiogallery_domain_model_filtertwoitem.xml');
+t3lib_extMgm::allowTableOnStandardPages('tx_audiogallery_domain_model_filtertwoitem');
+$TCA['tx_audiogallery_domain_model_filtertwoitem'] = array(
 	'ctrl' => array(
-		'title'						=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_filtergroup',
+		'title'						=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_filtertwoitem',
 		'label'						=> 'name',
 		'tstamp'					=> 'tstamp',
 		'crdate'					=> 'crdate',
@@ -78,8 +78,8 @@ $TCA['tx_audiogallery_domain_model_filtergroup'] = array(
 		'enablecolumns'				=> array(
 			'disabled'		=> 'hidden'
 		),
-		'dynamicConfigFile'			=> t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/FilterGroup.php',
-		'iconfile'					=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_audiogallery_domain_model_filtergroup.gif'
+		'dynamicConfigFile'			=> t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/FilterTwoItem.php',
+		'iconfile'					=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_audiogallery_domain_model_filtertwoitem.gif'
 	)
 );
 
