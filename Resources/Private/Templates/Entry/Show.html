@@ -20,9 +20,13 @@
 			
 			<div class="clear"></div>
 		</div>
-		<script type="text/javascript">
-			<addthis:rawValue value="{addthis_config}" />
-		</script>
-		<script type="text/javascript" src="{addthis_jsurl}"></script>
+		<f:if condition="{settings.renderAddThisInclude}">
+			<f:then>
+				<script type="text/javascript">
+					<addthis:rawValue value="{addthis_config}" />
+				</script>
+				<script type="text/javascript" src="{addthis_jsurl}"></script>
+			</f:then>
+		</f:if>
 	</div>
 </f:section>

@@ -72,6 +72,16 @@
 					</config>
 				</TCEforms>
 			</settings.filters_display>
+			
+			<settings.renderAddThisInclude>
+				<TCEforms>
+					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.audio_gallery.field.renderAddthisInclude</label>
+					<config>
+						<type>check</type>
+						<default>1</default>
+					</config>
+				</TCEforms>			
+			</settings.renderAddThisInclude>
 		</el>
 	</ROOT>
 </T3DataStructure>
