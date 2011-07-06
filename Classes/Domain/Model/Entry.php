@@ -91,6 +91,19 @@ class Tx_AudioGallery_Domain_Model_Entry extends Tx_Extbase_DomainObject_Abstrac
 	}
 	
 	/**
+	 * Returns the escaped title for the openGraph metatags
+	 * @return string
+	 */
+	public function getMetaTitle() {
+		$title = str_replace('"','',$this->getTitle());
+		$title = str_replace("'",'',$title);
+		$title = htmlspecialchars($title);
+		
+		return $title;
+	}
+	
+	
+	/**
 	 * Setter for author
 	 *
 	 * @param string $author Author of audio record

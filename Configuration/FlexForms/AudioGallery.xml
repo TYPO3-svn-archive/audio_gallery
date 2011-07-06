@@ -6,9 +6,9 @@
 	<ROOT>
 		<type>array</type>
 		<el>
-			<settings.single_view_jwplayer>
+			<settings.singleView>
 				<TCEforms>
-					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.audio_gallery.field.jwplayer_singlepage</label>
+					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.audio_gallery.field.singleView</label>
 					<config>
 						<type>group</type>
 						<internal_type>db</internal_type>
@@ -18,7 +18,20 @@
 						<minitems>1</minitems>
 					</config>
 				</TCEforms>
-			</settings.single_view_jwplayer>
+			</settings.singleView>
+			<settings.jwPlayerRedirect>
+				<TCEforms>
+					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.audio_gallery.field.jwPlayerRedirect</label>
+					<config>
+						<type>group</type>
+						<internal_type>db</internal_type>
+						<allowed>pages</allowed>
+						<size>1</size>
+						<maxitems>1</maxitems>
+						<minitems>1</minitems>
+					</config>
+				</TCEforms>
+			</settings.jwPlayerRedirect>
 			<settings.pagination_itemsPerPage>
 				<TCEforms>
 					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.entry.field.pagination_itemsPerPage</label>

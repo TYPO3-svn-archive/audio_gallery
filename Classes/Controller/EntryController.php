@@ -84,9 +84,11 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 */
 	public function showAction(Tx_AudioGallery_Domain_Model_Entry $entry) {
 		$this->addOpenGraphMetaTags($entry);
-		$entries = $this->addJwplayerConfig(array($entry));
+
 		$this->view->assign ( 'entry', $entry );
 		$codeGenerator = $this->objectManager->get ('Tx_Addthis_CodeGenerator');
+		
+		$this->view->assign('jwplayer_config',$this->getJwplayerConfig());
 		$this->view->assign('addthis_config',$codeGenerator->getConfigJs());
 		$this->view->assign('addthis_jsurl',$codeGenerator->getJsImport());
 	}
@@ -110,12 +112,9 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		exit ();
 	}
 	
-	/**
-	 * @param Tx_AudioGallery_Domain_Model_Entry $entry
-	 */
 	private function addOpenGraphMetaTags(Tx_AudioGallery_Domain_Model_Entry $entry){
 		$flashConfigGenerator	= $this->objectManager->get ('Tx_Jwplayer_FlashConfigGenerator');
-		$jwPid					= $this->getJWPlayerSinglePageId();
+		$jwPid					= $this->getjwPlayerRedirectPageId();
 		
 		/* generate the expected arguments for the jwplayer controller*/
 		$arguments = array();
@@ -127,12 +126,27 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		$settings['audio']		= $entry->getAudioFileUrl();
 		
 		$arguments['tx_jwplayer_pi1']['flash_player_config'] = $flashConfigGenerator->encode($settings, $entry->getPreviewImageUrl());
-		$url = $this->uriBuilder->setTargetPageUid($jwPid)->setArguments($arguments)->setCreateAbsoluteUri(TRUE)->buildFrontendUri();
+		$videourl = $this->uriBuilder->setTargetPageUid($jwPid)->setArguments($arguments)->setCreateAbsoluteUri(TRUE)->buildFrontendUri();
+		$title = $entry->getMetaTitle();
+
 		
-		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:type" content="video"/>' );
+	/*	$argumentsSingleView = array();
+		$argumentsSingleView['tx_audiogallery_pi1'] = array();
+		$argumentsSingleView['tx_audiogallery_pi1']['action'] = 'show';
+		$argumentsSingleView['tx_audiogallery_pi1']['controller'] = 'Entry';	
+		$argumentsSingleView['tx_audiogallery_pi1']['entry'] = $entry->getUid();
+		$singleViewPid = $this->getSingleViewPageId();	
+		$singleViewUrl = $this->uriBuilder->setTargetPageUid($singleViewPid)->setArguments($argumentsSingleView)->setCreateAbsoluteUri(TRUE)->buildFrontendUri(); */
+
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta name="medium" content="video"/>' );
-		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video" content="'.$url.'"/>' );
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:type" content="video"/>' );
+	//	$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:url" content="'.$singleViewUrl.'"/>' );
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:title" content="'.$title.'"/>' );
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:image" content="'.$image.'" />');
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video" content="'.$videourl.'"/>' );
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:type" content="application/x-shockwave-flash"/>' );
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:width" content="123">');
+		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:height" content="80">');
 	}
 	
 	/**
@@ -164,13 +178,26 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 * 
 	 * @return int
 	 */
-	protected function getJWPlayerSinglePageId() {
-		if(array_key_exists('single_view_jwplayer',$this->settings) && $this->settings['single_view_jwplayer'] != 0){
-			$pid = $this->settings['single_view_jwplayer'];
+	protected function getjwPlayerRedirectPageId() {
+		if(array_key_exists('jwPlayerRedirect',$this->settings) && $this->settings['jwPlayerRedirect'] != 0){
+			$pid = $this->settings['jwPlayerRedirect'];
 		} else {
-			throw new Exception('No jwplayer single view configured');
+			throw new Exception('No jwPlayerRedirect page configured');
 		}
 		return $pid;
+	}
+	
+	/**
+	 * 
+	 * @throws Exception
+	 */
+	public function getSingleViewPageId() {
+		if(array_key_exists('singleView',$this->settings) && $this->settings['singleView'] != 0){
+			$pid = $this->settings['singleView'];
+		} else {
+			throw new Exception('No jwPlayerRedirect page configured');
+		}
+		return $pid;		
 	}
 	
 	/**

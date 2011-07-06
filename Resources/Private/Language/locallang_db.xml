@@ -20,6 +20,9 @@
 			<label index="flexform.entry.field.pagination_itemsPerPage">Entries per page</label>
 			<label index="flexform.picture.field.pagination_insertAbove">Display pagination above</label>
 			<label index="flexform.picture.field.pagination_insertBelow">Display pagination below</label>
+			
+			<label index="flexform.audio_gallery.field.singleView">Gallery single view page (for facebook)</label>
+			<label index="flexform.audio_gallery.field.jwPlayerRedirect">Page with jwplayer redirect (for facebook)</label>
 		</languageKey>
 	</data>
 </T3locallang>
