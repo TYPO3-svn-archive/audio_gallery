@@ -34,7 +34,7 @@
 			</settings.jwPlayerRedirect>
 			<settings.pagination_itemsPerPage>
 				<TCEforms>
-					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.entry.field.pagination_itemsPerPage</label>
+					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.audio_gallery.field.pagination_itemsPerPage</label>
 					<config>
 						<type>input</type>
 						<default>12</default>
@@ -47,7 +47,7 @@
 			</settings.pagination_itemsPerPage>
 			<settings.pagination_insertAbove>
 				<TCEforms>
-					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.picture.field.pagination_insertAbove</label>
+					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.audio_gallery.field.pagination_insertAbove</label>
 					<config>
 						<type>check</type>
 						<default>1</default>
@@ -56,13 +56,22 @@
 			</settings.pagination_insertAbove>
 			<settings.pagination_insertBelow>
 				<TCEforms>
-					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.picture.field.pagination_insertBelow</label>
+					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.audio_gallery.field.pagination_insertBelow</label>
 					<config>
 						<type>check</type>
 						<default>1</default>
 					</config>
 				</TCEforms>
 			</settings.pagination_insertBelow>
+			<settings.filters_display>
+				<TCEforms>
+					<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.audio_gallery.field.filters_display</label>
+					<config>
+						<type>check</type>
+						<default>1</default>
+					</config>
+				</TCEforms>
+			</settings.filters_display>
 		</el>
 	</ROOT>
 </T3DataStructure>

@@ -1,8 +1,10 @@
+{namespace jwplayer=Tx_Jwplayer_ViewHelpers}
+
 <div class="jwplayer">
 	<p id="player_{entry.uid}">Video is loading ...</p>
 </div>
 
-<script type="text/javascript">
+<jwplayer:script>
 	
 	var file = "{entry.audioFileSrc}";
 	var image = "{entry.previewImageSrc}";
@@ -71,7 +73,7 @@
 		jwplayer(player_id).setup(config);
 	}
 	 /* ]]> */
-</script>
+</jwplayer:script>
 <noscript>
 	Please enable JavaScript
 </noscript>

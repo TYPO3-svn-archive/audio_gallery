@@ -17,10 +17,10 @@
 			<label index="tx_audiogallery_domain_model_filteroneitem.name">Name</label>
 			<label index="tx_audiogallery_domain_model_filtertwoitem">Filter Two Item</label>
 			<label index="tx_audiogallery_domain_model_filtertwoitem.name">Name</label>
-			<label index="flexform.entry.field.pagination_itemsPerPage">Entries per page</label>
-			<label index="flexform.picture.field.pagination_insertAbove">Display pagination above</label>
-			<label index="flexform.picture.field.pagination_insertBelow">Display pagination below</label>
-			
+			<label index="flexform.audio_gallery.field.pagination_itemsPerPage">Entries per page</label>
+			<label index="flexform.audio_gallery.field.pagination_insertAbove">Display pagination above</label>
+			<label index="flexform.audio_gallery.field.pagination_insertBelow">Display pagination below</label>
+			<label index="flexform.audio_gallery.field.filters_display">Display filters</label>
 			<label index="flexform.audio_gallery.field.singleView">Gallery single view page (for facebook)</label>
 			<label index="flexform.audio_gallery.field.jwPlayerRedirect">Page with jwplayer redirect (for facebook)</label>
 		</languageKey>
