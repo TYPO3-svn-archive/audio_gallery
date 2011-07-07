@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_audiogallery_domain_model_entry'] = array(
 	'ctrl' => $TCA['tx_audiogallery_domain_model_entry']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList'	=> 'title,author,audio_file_path,preview_image_path,filter_one_item,filter_two_item'
+		'showRecordFieldList'	=> 'title,author,audio_file_path,preview_image_path,single_view_image_path,filter_one_item,filter_two_item'
 	),
 	'types' => array(
-		'1' => array('showitem'	=> 'title,author,audio_file_path,preview_image_path,filter_one_item,filter_two_item')
+		'1' => array('showitem'	=> 'title,author,audio_file_path,preview_image_path,single_view_image_path,filter_one_item,filter_two_item')
 	),
 	'palettes' => array(
 		'1' => array('showitem'	=> '')
@@ -111,6 +111,22 @@ $TCA['tx_audiogallery_domain_model_entry'] = array(
 				'minitems' => '0'	
 			)
 		),
+		'single_view_image_path' => array(
+			'exclude'	=> 1,
+			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.single_view_image_path',
+			'config'  => array(
+				'type' => 'group',
+				'internal_type' => 'file',
+				'allowed' => $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
+				'max_size' => '10000',
+				'uploadfolder' => 'uploads/tx_audiogallery',
+				'show_thumbs' => '1',
+				'size' => 3,
+				'autoSizeMax' => 15,
+				'maxitems' => '1',
+				'minitems' => '0'	
+			)
+		),		
 		'filter_one_item' => array(
 			'exclude'	=> 0,
 			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.filter_one_item',

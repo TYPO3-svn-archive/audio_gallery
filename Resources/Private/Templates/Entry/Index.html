@@ -53,7 +53,7 @@
 				<p>{entry.title}</p>
 				<h3 class="skin-color">{entry.author}</h3>
 				<div class="background skin-back">
-					<f:render partial="jwplayer" arguments="{entry:entry, jwplayer_config:jwplayer_config}" />
+					<f:render partial="jwplayer" arguments="{entry:entry, jwplayer_config:jwplayer_config, image: entry.previewImageSrc}" />
 				</div>
 				<f:render partial="Addthis" arguments="{entry:entry}" />
 			</div>

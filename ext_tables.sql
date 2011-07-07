@@ -7,6 +7,7 @@ CREATE TABLE tx_audiogallery_domain_model_entry (
 	author varchar(255) DEFAULT '' NOT NULL,
 	audio_file_path varchar(255) DEFAULT '' NOT NULL,
 	preview_image_path varchar(255) DEFAULT '' NOT NULL,
+	single_view_image_path varchar(255) DEFAULT '' NOT NULL,
 	filter_one_item int(11) unsigned DEFAULT '0',
 	filter_two_item int(11) unsigned DEFAULT '0',
 

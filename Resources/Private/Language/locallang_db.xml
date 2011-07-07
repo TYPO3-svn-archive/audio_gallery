@@ -11,6 +11,7 @@
 			<label index="tx_audiogallery_domain_model_entry.author">Author</label>
 			<label index="tx_audiogallery_domain_model_entry.audio_file_path">Audio File Path</label>
 			<label index="tx_audiogallery_domain_model_entry.preview_image_path">Preview Image Path</label>
+			<label index="tx_audiogallery_domain_model_entry.single_view_image_path">Single View Image Path</label>
 			<label index="tx_audiogallery_domain_model_entry.filter_one_item">Filter One Item</label>
 			<label index="tx_audiogallery_domain_model_entry.filter_two_item">Filter Two Item</label>
 			<label index="tx_audiogallery_domain_model_filteroneitem">Filter One Item</label>

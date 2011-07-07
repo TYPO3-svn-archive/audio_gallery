@@ -60,6 +60,12 @@ class Tx_AudioGallery_Domain_Model_Entry extends Tx_Extbase_DomainObject_Abstrac
 	protected $previewImagePath;
 	
 	/**
+	 * Path to image for single view.
+	 * @var string
+	 */
+	protected $singleViewImagePath;
+	
+	/**
 	 * filterOneItem
 	 * @var Tx_AudioGallery_Domain_Model_FilterOneItem
 	 */
@@ -194,6 +200,30 @@ class Tx_AudioGallery_Domain_Model_Entry extends Tx_Extbase_DomainObject_Abstrac
 	 */
 	public function getPreviewImageUrl() {
 		return t3lib_div::getIndpEnv('TYPO3_SITE_URL').$this->getPreviewImageSrc();
+	}
+	
+	/**
+	 * This method is used to return an image for the single view.
+	 * 
+	 * @return string
+	 */
+	public function getSingleViewImageSrc() {
+		$image = $this->singleViewImagePath;
+		
+		if($image == '') {
+			$image = $this->previewImagePath;
+		}
+		
+		return self::UPLOAD_FOLDER .$image;
+	}
+	
+	/**
+	 * This method is sued to return the url to the single view image.
+	 * 
+	 * @return string
+	 */
+	public function getSingleViewImageUrl() {
+		return t3lib_div::getIndpEnv('TYPO3_SITE_URL').$this->getSingleViewImageSrc();
 	}
 	
 	/**
