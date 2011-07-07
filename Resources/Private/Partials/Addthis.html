@@ -1,6 +1,10 @@
 <!-- AddThis Button BEGIN -->
 <div class="addthis_toolbox addthis_default_style" addthis:url="{f:uri.action(pageUid: settings.singleView, controller:'Entry',action:'show',absolute:1,arguments:{entry:entry})}" addthis:title="{entry.title}">
-	<f:link.action class="download-link" action="download" arguments="{entry : entry}">
+	<a class="addthis_button_facebook">
+		<img src="{f:uri.resource(path:'Images/facebook.png')}" />
+	</a>
+	
+	<f:link.action class="download-link" action="download" arguments="{entry : entry}" title="Download">
 		<f:if condition="{largeButton}">
 			<f:then>
 				<img src="{f:uri.resource(path:'Images/download.png')}" />
@@ -13,9 +17,6 @@
 	</f:link.action>
 	<a class="addthis_button_email">
 		<img src="{f:uri.resource(path:'Images/mail.png')}" />
-	</a>
-	<a class="addthis_button_facebook">
-		<img src="{f:uri.resource(path:'Images/facebook.png')}" />
 	</a>
 </div>
 <!-- AddThis Button END -->
