@@ -32,5 +32,15 @@
  */
 class Tx_AudioGallery_Domain_Repository_FilterTwoItemRepository extends Tx_Extbase_Persistence_Repository {
 
+	/**
+	 * @return array
+	 */
+	public function findAll() {
+		$query = $this->createQuery();
+
+		$query->setOrderings ( array ('sorting' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING ) );
+		
+		return $query->execute();
+	}
 
 }

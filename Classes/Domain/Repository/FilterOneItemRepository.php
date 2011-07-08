@@ -31,6 +31,16 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class Tx_AudioGallery_Domain_Repository_FilterOneItemRepository extends Tx_Extbase_Persistence_Repository {
+	
+	/**
+	 * @return array
+	 */
+	public function findAll() {
+		$query = $this->createQuery();
 
+		$query->setOrderings ( array ('sorting' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING ) );
+		
+		return $query->execute();
+	}
 
 }
