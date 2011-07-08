@@ -24,7 +24,16 @@
 							</config>
 						</TCEforms>
 					</settings.singleView>
-
+					<settings.facebookTitle>
+						<TCEforms>
+							<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.audio_gallery.field.facebookTitle</label>
+							<config>
+								<type>input</type>
+								<size>30</size>
+								<default></default>
+							</config>
+						</TCEforms>
+					</settings.facebookTitle>
 					<settings.pagination_itemsPerPage>
 						<TCEforms>
 							<label>LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:flexform.audio_gallery.field.pagination_itemsPerPage</label>

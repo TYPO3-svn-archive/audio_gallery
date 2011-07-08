@@ -129,9 +129,8 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		
 		$arguments['tx_jwplayer_pi1']['flash_player_config'] = $flashConfigGenerator->encode($settings, $entry->getPreviewImageUrl());
 		$videourl = $this->uriBuilder->setTargetPageUid($jwPid)->setArguments($arguments)->setCreateAbsoluteUri(TRUE)->buildFrontendUri();
-		$title = $entry->getMetaTitle();
+		$title = $this->getFacebookTitle();
 		$image = $entry->getPreviewImageUrl();
-
 		
 		$argumentsSingleView = array();
 		$argumentsSingleView['tx_audiogallery_pi1'] = array();
@@ -152,6 +151,21 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:type" content="application/x-shockwave-flash"/>' );
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:width" content="123">');
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:height" content="80">');
+	}
+	
+	/**
+	 * Returns the configured facebookTitle of the plugin.
+	 * 
+	 * @return string
+	 */
+	protected function getFacebookTitle() {
+		$facebookTitle = '';
+
+		if(array_key_exists('facebookTitle',$this->settings) && $this->settings['facebookTitle'] != ''){
+			$facebookTitle = $this->settings['facebookTitle'];
+		}
+		
+		return $facebookTitle;
 	}
 	
 	/**

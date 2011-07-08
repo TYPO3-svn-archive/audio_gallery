@@ -25,7 +25,7 @@
 			<label index="flexform.audio_gallery.field.singleView">Gallery single view page (for facebook)</label>
 			<label index="flexform.audio_gallery.field.jwPlayerRedirect">Page with jwplayer redirect (for facebook)</label>
 			<label index="flexform.audio_gallery.field.renderAddthisInclude">Include addThis JS Code</label>
-			
+			<label index="flexform.audio_gallery.field.facebookTitle">Title for the facebook share</label>
 			
 			<label index="flexform.audio_gallery.field.participatePage">Page with participation form.</label>
 			<label index="flexform.audio_gallery.field.listViewPage">Page for the list view.</label>
