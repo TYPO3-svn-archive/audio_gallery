@@ -186,9 +186,8 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	protected function getjwPlayerRedirectPageId() {
 		if(array_key_exists('jwPlayerRedirect',$this->settings) && $this->settings['jwPlayerRedirect'] != 0){
 			$pid = $this->settings['jwPlayerRedirect'];
-		} else {
-			throw new Exception('No jwPlayerRedirect page configured');
-		}
+		} 
+		
 		return $pid;
 	}
 	
@@ -199,9 +198,7 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	public function getSingleViewPageId() {
 		if(array_key_exists('singleView',$this->settings) && $this->settings['singleView'] != 0){
 			$pid = $this->settings['singleView'];
-		} else {
-			throw new Exception('No jwPlayerRedirect page configured');
-		}
+		} 
 		return $pid;		
 	}
 	

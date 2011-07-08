@@ -11,7 +11,7 @@
 			</div>
 			
 			<div class="content">
-				<h1 class="skin-color">Dein Sound</h1>
+				<img src="{f:uri.resource(path:'Images/deinsound.png')}" alt="Dein Sound"/>
 				<p>{entry.title}</p>
 				<p class="skin-color">{entry.author}</p>
 				
@@ -19,6 +19,18 @@
 			</div>
 			
 			<div class="clear"></div>
+
+			<div class="buttons">
+				<f:if condition="{settings.participatePage}">
+					<f:link.page pageUid="{settings.participatePage}" class="single-button"><img src="{f:uri.resource(path:'Images/participate.png')}" /></f:link.page>	
+				</f:if>
+							
+				<f:if condition="{settings.listViewPage}">
+					<f:link.page pageUid="{settings.listViewPage}" class="single-button"><img src="{f:uri.resource(path:'Images/list.png')}" /></f:link.page>
+				</f:if>
+			</div>
+			
+
 		</div>
 		<f:if condition="{settings.renderAddThisInclude}">
 			<f:then>
