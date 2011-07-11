@@ -65,9 +65,12 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 * @return string The rendered list action
 	 */
 	public function indexAction() {
-		$filters = $this->getFilters();
-		
-		$entries = $this->entryRepository->findAllFiltered($filters['filterOne']['selectedItem'], $filters['filterTwo']['selectedItem']);
+		if($this->useFilters()) {
+			$filters = $this->getFilters();	
+			$entries = $this->entryRepository->findAllFiltered($filters['filterOne']['selectedItem'], $filters['filterTwo']['selectedItem']);
+		} else {
+			$entries = $this->entryRepository->findAll();
+		}
 		
 		$codeGenerator = $this->objectManager->get ('Tx_Addthis_CodeGenerator');
 
@@ -255,5 +258,11 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	 */
 	protected function getErrorFlashMessage() {
 		return FALSE;
+	}
+	/**
+	 * @return boolean
+	 */
+	protected function useFilters() {
+		return (boolean) $this->settings['filters_display'];
 	}
 }
