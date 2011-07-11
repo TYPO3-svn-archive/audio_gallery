@@ -40,16 +40,20 @@ class Tx_AudioGallery_Domain_Repository_EntryRepository extends Tx_Extbase_Persi
 	 */
 	public function findAllFiltered(Tx_AudioGallery_Domain_Model_FilterOneItem $filterOne = null, Tx_AudioGallery_Domain_Model_FilterTwoItem $filterTwo = null) {
 		$query = $this->createQuery();
+		
+		if($filterOne !== NULL && $filterTwo !== NULL) {
+			$constraints = array();
+			$constraints[] = $query->equals('filter_one_item', $filterOne->getUid());
+			$constraints[] = $query->equals('filter_two_item', $filterTwo->getUid());
+			$query->matching($query->logicalAnd($constraints));
+		} else if($filterOne !== NULL) {
+			$query->matching($query->equals('filter_one_item', $filterOne->getUid()));
+		} else if($filterTwo !== NULL) {
+			$query->matching($query->equals('filter_two_item', $filterTwo->getUid()));
+		}
 
-		if ($filterOne !== NULL) {
-			$query->matching($query->logicalAnd($query->equals('filter_one_item', $filterOne->getUid())));
-		} 
-		if ($filterTwo !== NULL) {
-			$query->matching($query->logicalAnd($query->equals('filter_two_item', $filterTwo->getUid())));
-		} 
-		
 		$query->setOrderings ( array ('title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING ) );
-		
+
 		return $query->execute();
 	}
 
