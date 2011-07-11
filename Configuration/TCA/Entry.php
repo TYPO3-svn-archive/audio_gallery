@@ -132,7 +132,11 @@ $TCA['tx_audiogallery_domain_model_entry'] = array(
 			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.filter_one_item',
 			'config'	=> array(
 				'type' => 'select',
+				'items' => array (
+					array('LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.filter_one_item.I.0',0),
+				),
 				'foreign_table' => 'tx_audiogallery_domain_model_filteroneitem',
+				'foreign_table_where' => 'AND tx_audiogallery_domain_model_filteroneitem.pid=###CURRENT_PID### ORDER BY tx_audiogallery_domain_model_filteroneitem.name',
 				'minitems' => 0,
 				'maxitems' => 1,
 				'wizards' => array(
@@ -165,7 +169,11 @@ $TCA['tx_audiogallery_domain_model_entry'] = array(
 			'label'		=> 'LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.filter_two_item',
 			'config'	=> array(
 				'type' => 'select',
+				'items' => array (
+					array('LLL:EXT:audio_gallery/Resources/Private/Language/locallang_db.xml:tx_audiogallery_domain_model_entry.filter_two_item.I.0',0),
+				),
 				'foreign_table' => 'tx_audiogallery_domain_model_filtertwoitem',
+				'foreign_table_where' => 'AND tx_audiogallery_domain_model_filtertwoitem.pid=###CURRENT_PID### ORDER BY tx_audiogallery_domain_model_filtertwoitem.name',
 				'minitems' => 0,
 				'maxitems' => 1,
 				'wizards' => array(
