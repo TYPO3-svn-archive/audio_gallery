@@ -67,6 +67,7 @@ $TCA['tx_audiogallery_domain_model_entry'] = array(
 			'config'	=> array(
 				'type' => 'input',
 				'size' => 30,
+				'max' => 18,
 				'eval' => 'trim'
 			)
 		),
@@ -76,6 +77,7 @@ $TCA['tx_audiogallery_domain_model_entry'] = array(
 			'config'	=> array(
 				'type' => 'input',
 				'size' => 30,
+				'max' => 18,
 				'eval' => 'trim'
 			)
 		),
