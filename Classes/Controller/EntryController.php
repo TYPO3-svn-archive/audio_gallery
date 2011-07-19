@@ -111,14 +111,14 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		}
 		$binaryContent = file_get_contents($entry->getAudioFileUrl());
 
-		$this->response->setContent ( $binaryContent );
-		$this->response->setHeader ( 'Content-Type', 'audio/mpeg' );
-		$this->response->setHeader ( 'Content-Disposition', 'attachment; filename=' . $filename );
-		$this->response->setHeader ( 'Content-Length', strlen ( $binaryContent ) );
-		$this->response->setHeader ( 'Content-Description', 'File Transfer' );
-		$this->response->setHeader ( 'Cache-Control', 'private' );
-		$this->response->setHeader ( 'Pragma', 'private' );
-		throw new Tx_Extbase_MVC_Exception_StopAction ();
+		ob_clean ();
+		header ( 'Content-Type: audio/mpeg' );
+		header ( 'Content-Disposition: attachment; filename='.$filename );
+		header ( 'Content-Length: ' . strlen ( $binaryContent ) );
+		header ( 'Cache-Control: private' );
+		header ( 'Pragma: private' );
+		echo $binaryContent;
+		exit();
 	}
 
 	/**
