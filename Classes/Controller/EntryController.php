@@ -110,17 +110,125 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 			$filename = 'file_'.$entry->getUid().'.mp3';
 		}
 		$binaryContent = file_get_contents($entry->getAudioFileUrl());
-		
-		ob_clean ();
-		header ( 'Content-Type: audio/mpeg' );
-		header ( 'Content-Disposition: attachment; filename='.$filename );
-		header ( 'Content-Length: ' . strlen ( $binaryContent ) );
-		header ( 'Cache-Control: private' );
-		header ( 'Pragma: private' );
-		echo $binaryContent;
-		exit ();
+
+		$this->response->setContent ( $binaryContent );
+		$this->response->setHeader ( 'Content-Type', 'audio/mpeg' );
+		$this->response->setHeader ( 'Content-Disposition', 'attachment; filename=' . $filename );
+		$this->response->setHeader ( 'Content-Length', strlen ( $binaryContent ) );
+		$this->response->setHeader ( 'Content-Description', 'File Transfer' );
+		$this->response->setHeader ( 'Cache-Control', 'private' );
+		$this->response->setHeader ( 'Pragma', 'private' );
+		throw new Tx_Extbase_MVC_Exception_StopAction ();
 	}
-	
+
+	/**
+	 * Method for displaying custom error flash messages, or to display no flash message at all on errors.
+	 * 
+	 * INFO:
+	 *  - Flash-Messages (will be put in session of FE-user) in extbase 1.3.x only works together with TYPO3 4.5.x (because only
+	 *    TYPO3 4.5.x supports FE-context for flashMessages)! This extension should work with TYPO3 4.3.x, so we must deactive this messages!
+	 *
+	 * @return boolean
+	 */
+	protected function getErrorFlashMessage() {
+		return FALSE;
+	}
+	/**
+	 * Returns the configured facebookTitle of the plugin.
+	 * 
+	 * @return string
+	 */
+	protected function getFacebookTitle() {
+		$facebookTitle = '';
+
+		if(array_key_exists('facebookTitle',$this->settings) && $this->settings['facebookTitle'] != ''){
+			$facebookTitle = $this->settings['facebookTitle'];
+		}
+		
+		return $facebookTitle;
+	}
+	/**
+	 * Returns array with filter data
+	 * @return array $selectedFilterItems
+	 */
+	protected function getFilters() {
+		$filters = array();
+		
+		$filters['filterOne'] = array();
+		$filters['filterOne']['items'] = $this->filterOneItemRepository->findAll();
+		if ($this->request->hasArgument ( 'filterOneItem' )) {
+			$filterOneSelectedItemUid =  intval($this->request->getArgument ( 'filterOneItem' ));
+			$filters['filterOne']['selectedItem'] = $this->filterOneItemRepository->findByUid($filterOneSelectedItemUid);
+		}
+		
+		$filters['filterTwo'] = array();
+		$filters['filterTwo']['items'] = $this->filterTwoItemRepository->findAll();
+		if ($this->request->hasArgument ( 'filterTwoItem' )) {
+			$filterTwoSelectedItemUid =  intval($this->request->getArgument ( 'filterTwoItem' ));
+			$filters['filterTwo']['selectedItem'] = $this->filterTwoItemRepository->findByUid($filterTwoSelectedItemUid);
+		}
+
+		return $filters;
+	}
+	/**
+	 * Returns cofnig for jwplayer
+	 * @return array $config
+	 */
+	protected function getJwplayerConfig() {
+		$settings = array();
+		$settings['volume'] = intval($this->settings['jwplayer']['volume']);
+		$settings['height'] = intval($this->settings['jwplayer']['height']);
+		$settings['width'] = intval($this->settings['jwplayer']['width']);
+		$settings['skin'] = $this->settings['jwplayer']['skin'];
+		$settings['flashplayer'] = $this->settings['jwplayer']['flashplayer'];
+		$settings['backcolor'] = $this->settings['jwplayer']['backcolor'];
+		$settings['fontcolor'] = $this->settings['jwplayer']['fontcolor'];
+		$settings['lightcolor'] = $this->settings['jwplayer']['lightcolor'];
+		$settings['screencolor'] = $this->settings['jwplayer']['screenscolor'];
+		$settings['bufferlength'] = intval($this->settings['jwplayer']['bufferlength']);
+		$settings['autostart'] = $this->settings['jwplayer']['autostart'];
+		$settings['mute'] = $this->settings['jwplayer']['mute'];
+		$settings['stretching'] = $this->settings['jwplayer']['stretching'];
+		$settings['repeat'] = $this->settings['jwplayer']['repeat'];
+		$settings['controlbar'] = $this->settings['jwplayer']['controlbar'];
+		
+		$config = new Tx_Jwplayer_Config();
+		$config->setSettings($settings);
+		
+		return $config->getJsConfig();
+	}
+	/**
+	 * Read the configured pageid where the jwplayer plugin for facebook redirects is installed.
+	 * 
+	 * @return int
+	 */
+	protected function getjwPlayerRedirectPageId() {
+		if(array_key_exists('jwPlayerRedirect',$this->settings) && $this->settings['jwPlayerRedirect'] != 0){
+			$pid = $this->settings['jwPlayerRedirect'];
+		} 
+		
+		return $pid;
+	}
+	/**
+	 * 
+	 * @throws Exception
+	 */
+	protected function getSingleViewPageId() {
+		if(array_key_exists('singleView',$this->settings) && $this->settings['singleView'] != 0){
+			$pid = $this->settings['singleView'];
+		} 
+		return $pid;		
+	}
+	/**
+	 * @return boolean
+	 */
+	protected function useFilters() {
+		return (boolean) $this->settings['filters_display'];
+	}
+
+	/**
+	 * @param Tx_AudioGallery_Domain_Model_Entry $entry
+	 */
 	private function addOpenGraphMetaTags(Tx_AudioGallery_Domain_Model_Entry $entry){
 		$flashConfigGenerator	= $this->objectManager->get ('Tx_Jwplayer_FlashConfigGenerator');
 		$jwPid					= $this->getjwPlayerRedirectPageId();
@@ -158,115 +266,5 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:type" content="application/x-shockwave-flash"/>' );
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:width" content="123">');
 		$GLOBALS['TSFE']->getPageRenderer()->addMetaTag( '<meta property="og:video:height" content="80">');
-	}
-	
-	/**
-	 * Returns the configured facebookTitle of the plugin.
-	 * 
-	 * @return string
-	 */
-	protected function getFacebookTitle() {
-		$facebookTitle = '';
-
-		if(array_key_exists('facebookTitle',$this->settings) && $this->settings['facebookTitle'] != ''){
-			$facebookTitle = $this->settings['facebookTitle'];
-		}
-		
-		return $facebookTitle;
-	}
-	
-	/**
-	 * Returns array with filter data
-	 * @return array $selectedFilterItems
-	 */
-	protected function getFilters() {
-		$filters = array();
-		
-		$filters['filterOne'] = array();
-		$filters['filterOne']['items'] = $this->filterOneItemRepository->findAll();
-		if ($this->request->hasArgument ( 'filterOneItem' )) {
-			$filterOneSelectedItemUid =  intval($this->request->getArgument ( 'filterOneItem' ));
-			$filters['filterOne']['selectedItem'] = $this->filterOneItemRepository->findByUid($filterOneSelectedItemUid);
-		}
-		
-		$filters['filterTwo'] = array();
-		$filters['filterTwo']['items'] = $this->filterTwoItemRepository->findAll();
-		if ($this->request->hasArgument ( 'filterTwoItem' )) {
-			$filterTwoSelectedItemUid =  intval($this->request->getArgument ( 'filterTwoItem' ));
-			$filters['filterTwo']['selectedItem'] = $this->filterTwoItemRepository->findByUid($filterTwoSelectedItemUid);
-		}
-
-		return $filters;
-	}
-
-	/**
-	 * Read the configured pageid where the jwplayer plugin for facebook redirects is installed.
-	 * 
-	 * @return int
-	 */
-	protected function getjwPlayerRedirectPageId() {
-		if(array_key_exists('jwPlayerRedirect',$this->settings) && $this->settings['jwPlayerRedirect'] != 0){
-			$pid = $this->settings['jwPlayerRedirect'];
-		} 
-		
-		return $pid;
-	}
-	
-	/**
-	 * 
-	 * @throws Exception
-	 */
-	public function getSingleViewPageId() {
-		if(array_key_exists('singleView',$this->settings) && $this->settings['singleView'] != 0){
-			$pid = $this->settings['singleView'];
-		} 
-		return $pid;		
-	}
-	
-	/**
-	 * Returns cofnig for jwplayer
-	 * @return array $config
-	 */
-	protected function getJwplayerConfig() {
-		$settings = array();
-		$settings['volume'] = intval($this->settings['jwplayer']['volume']);
-		$settings['height'] = intval($this->settings['jwplayer']['height']);
-		$settings['width'] = intval($this->settings['jwplayer']['width']);
-		$settings['skin'] = $this->settings['jwplayer']['skin'];
-		$settings['flashplayer'] = $this->settings['jwplayer']['flashplayer'];
-		$settings['backcolor'] = $this->settings['jwplayer']['backcolor'];
-		$settings['fontcolor'] = $this->settings['jwplayer']['fontcolor'];
-		$settings['lightcolor'] = $this->settings['jwplayer']['lightcolor'];
-		$settings['screencolor'] = $this->settings['jwplayer']['screenscolor'];
-		$settings['bufferlength'] = intval($this->settings['jwplayer']['bufferlength']);
-		$settings['autostart'] = $this->settings['jwplayer']['autostart'];
-		$settings['mute'] = $this->settings['jwplayer']['mute'];
-		$settings['stretching'] = $this->settings['jwplayer']['stretching'];
-		$settings['repeat'] = $this->settings['jwplayer']['repeat'];
-		$settings['controlbar'] = $this->settings['jwplayer']['controlbar'];
-		
-		$config = new Tx_Jwplayer_Config();
-		$config->setSettings($settings);
-		
-		return $config->getJsConfig();
-	}
-	
-	/**
-	 * Method for displaying custom error flash messages, or to display no flash message at all on errors.
-	 * 
-	 * INFO:
-	 *  - Flash-Messages (will be put in session of FE-user) in extbase 1.3.x only works together with TYPO3 4.5.x (because only
-	 *    TYPO3 4.5.x supports FE-context for flashMessages)! This extension should work with TYPO3 4.3.x, so we must deactive this messages!
-	 *
-	 * @return boolean
-	 */
-	protected function getErrorFlashMessage() {
-		return FALSE;
-	}
-	/**
-	 * @return boolean
-	 */
-	protected function useFilters() {
-		return (boolean) $this->settings['filters_display'];
 	}
 }
