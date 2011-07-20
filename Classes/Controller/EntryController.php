@@ -99,29 +99,6 @@ class Tx_AudioGallery_Controller_EntryController extends Tx_Extbase_MVC_Controll
 	}
 	
 	/**
-	 * download audio file
-	 * @param Tx_AudioGallery_Domain_Model_Entry $entry
-	 */
-	public function downloadAction(Tx_AudioGallery_Domain_Model_Entry $entry) {
-		if (!(strlen($entry->getTitle()) === 0 && strlen($entry->getAuthor()) === 0)) {
-			$filename = $entry->getTitle().'_'.$entry->getAuthor().'.mp3';
-			$filename = str_replace(' ', '-', $filename);
-		} else {
-			$filename = 'file_'.$entry->getUid().'.mp3';
-		}
-		$binaryContent = file_get_contents($entry->getAudioFileUrl());
-
-		ob_clean ();
-		header ( 'Content-Type: audio/mpeg' );
-		header ( 'Content-Disposition: attachment; filename='.$filename );
-		header ( 'Content-Length: ' . strlen ( $binaryContent ) );
-		header ( 'Cache-Control: private' );
-		header ( 'Pragma: private' );
-		echo $binaryContent;
-		exit();
-	}
-
-	/**
 	 * Method for displaying custom error flash messages, or to display no flash message at all on errors.
 	 * 
 	 * INFO:

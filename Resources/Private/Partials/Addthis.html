@@ -4,7 +4,7 @@
 		<img src="{f:uri.resource(path:'Images/facebook.png')}" />
 	</a>
 	
-	<f:link.action class="download-link" action="download" pageType="120719072011" arguments="{entry : entry}" title="Download">
+	<a href="{entry.audioFileUrl}">
 		<f:if condition="{largeButton}">
 			<f:then>
 				<img src="{f:uri.resource(path:'Images/download.png')}" />
@@ -13,8 +13,7 @@
 				<img src="{f:uri.resource(path:'Images/download-small.png')}" />
 			</f:else>
 		</f:if>	
-	
-	</f:link.action>
+	</a>
 	<a class="addthis_button_email">
 		<img src="{f:uri.resource(path:'Images/mail.png')}" />
 	</a>

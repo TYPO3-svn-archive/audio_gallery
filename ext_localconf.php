@@ -7,10 +7,7 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'Pi1',
 	array(
-		'Entry' => 'index,show,download',
-	),
-	array(
-		'Entry' => 'download',
+		'Entry' => 'index,show',
 	)
 );
 ?>
